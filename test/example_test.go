@@ -1,6 +1,6 @@
 package test
 
-import "github.com/ddspog/mspec/bdd"
+import "github.com/ddspog/mspec.temp/bdd"
 
 //"testing"
 

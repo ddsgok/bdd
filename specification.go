@@ -8,7 +8,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/ddspog/mspec/colors"
+	"github.com/ddspog/mspec.temp/colors"
 )
 
 type formatter interface {

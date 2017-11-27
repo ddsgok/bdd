@@ -1,7 +1,7 @@
 package examples
 
 import (
-	. "github.com/ddspog/mspec"
+	. "github.com/ddspog/mspec.temp"
 	"testing"
 )
 
