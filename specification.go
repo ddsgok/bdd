@@ -8,7 +8,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/eduncan911/go-mspec/colors"
+	"github.com/ddspog/mspec/colors"
 )
 
 type formatter interface {

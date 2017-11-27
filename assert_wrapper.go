@@ -2,8 +2,9 @@ package mspec
 
 import (
 	"fmt"
-	asserts "github.com/eduncan911/go-mspec/assert"
 	"strings"
+
+	asserts "github.com/ddspog/mspec/assert"
 )
 
 /*

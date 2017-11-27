@@ -1,7 +1,7 @@
 package examples
 
 import (
-	. "github.com/eduncan911/go-mspec"
+	. "github.com/ddspog/mspec"
 	"testing"
 )
 
