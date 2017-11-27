@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/ddspog/mspec"
+	"gopkg.in/ddspog/mspec.v1"
 )
 
 // Given defines the Feature's specific context to be spec'd out.

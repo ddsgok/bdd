@@ -1,7 +1,7 @@
 package examples
 
 import (
-	. "github.com/ddspog/mspec"
+	. "gopkg.in/ddspog/mspec.v1"
 	"testing"
 )
 
