@@ -2,7 +2,7 @@
 
 `MSpec` is a BDD context/specification testing package for Go(Lang) with a strong emphases on spec'ing your feature(s) and scenarios first, before any code is written using as little syntax noise as possible.  This leaves you free to think of your project and features as a whole without the distraction of writing any code with the added benefit of having tests ready for your project.
 
-[![GoDoc](https://godoc.org/github.com/ddspog/mspec.temp?status.svg)](https://godoc.org/github.com/ddspog/mspec.temp) [![Build Status](https://travis-ci.org/eduncan911/mspec.svg?branch=master)](https://travis-ci.org/eduncan911/mspec) [![Go Report Card](https://goreportcard.com/badge/github.com/ddspog/mspec.temp)](https://goreportcard.com/report/github.com/ddspog/mspec.temp)
+[![GoDoc](https://godoc.org/github.com/ddspog/mspec?status.svg)](https://godoc.org/github.com/ddspog/mspec) [![Build Status](https://travis-ci.org/eduncan911/mspec.svg?branch=master)](https://travis-ci.org/eduncan911/mspec) [![Go Report Card](https://goreportcard.com/badge/github.com/ddspog/mspec)](https://goreportcard.com/report/github.com/ddspog/mspec)
 
 ## Features
 
@@ -29,7 +29,7 @@ We do not expect any more breaking changes as of v0.4.
 
 Install it with one line of code:
 
-`go get -v -u github.com/ddspog/mspec.temp`
+`go get -v -u github.com/ddspog/mspec`
 
 There are no external dependencies and it is built against Go's internal packages.  The only dependency is that you have [GOPATH setup normaly](https://golang.org/doc/code.html).
 
@@ -53,7 +53,7 @@ You represent these thoughts in your tests like this:
 package main
 
 import (
-    . "github.com/ddspog/mspec.temp"
+    . "github.com/ddspog/mspec"
     "testing"
 )
 
@@ -106,7 +106,7 @@ Let's write a full specification with real code.
 package dogs
 
 import (
-    . "github.com/ddspog/mspec.temp"
+    . "github.com/ddspog/mspec"
     "testing"
 )
 
@@ -174,7 +174,7 @@ Let's add a feature that has a spec that will blow up.
 package main
 
 import (
-    . "github.com/ddspog/mspec.temp"
+    . "github.com/ddspog/mspec"
     "testing"
 )
 
@@ -229,7 +229,7 @@ The default coloring also makes it standout amongst other tests that passed.
 Be sure to check out more advanced examples in the examples/ folder including how to spec code without writing any implementation details.
 
 ```bash
-$ cd $GOPATH/src/github.com/ddspog/mspec.temp/examples/
+$ cd $GOPATH/src/github.com/ddspog/mspec/examples/
 $ go test
 ```
 
