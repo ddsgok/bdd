@@ -3,7 +3,7 @@ package mspec
 import (
 	"strings"
 
-	"gopkg.in/ddspog/mspec.v1/colors"
+	"github.com/ddspog/mspec/colors"
 )
 
 var config *MSpecConfig

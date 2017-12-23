@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	asserts "gopkg.in/ddspog/mspec.v1/assert"
+	asserts "github.com/ddspog/mspec/assert"
 )
 
 /*

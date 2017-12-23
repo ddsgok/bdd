@@ -1,8 +1,9 @@
 package examples
 
 import (
-	. "gopkg.in/ddspog/mspec.v1"
 	"testing"
+
+	. "github.com/ddspog/mspec/bdd"
 )
 
 func Test_Multiple_Givens(t *testing.T) {

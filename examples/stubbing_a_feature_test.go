@@ -1,8 +1,9 @@
 package examples
 
 import (
-	. "gopkg.in/ddspog/mspec.v1"
 	"testing"
+
+	. "github.com/ddspog/mspec/bdd"
 )
 
 func Test_Specing_A_New_Feature(t *testing.T) {
