@@ -53,7 +53,7 @@ You represent these thoughts in your tests like this:
 package main
 
 import (
-    . "github.com/ddspog/mspec"
+    . "github.com/ddspog/bdd"
     "testing"
 )
 
@@ -106,7 +106,7 @@ Let's write a full specification with real code.
 package dogs
 
 import (
-    . "github.com/ddspog/mspec"
+    . "github.com/ddspog/bdd"
     "testing"
 )
 
@@ -174,7 +174,7 @@ Let's add a feature that has a spec that will blow up.
 package main
 
 import (
-    . "github.com/ddspog/mspec"
+    . "github.com/ddspog/bdd"
     "testing"
 )
 

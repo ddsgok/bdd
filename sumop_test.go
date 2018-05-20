@@ -4,12 +4,6 @@ import (
 	"fmt"
 )
 
-// TestSumOper is a test interface to suite test a struct.
-type TestSumOper interface {
-	Sum(int, int) int
-	LastResultAsString() string
-}
-
 // TestInt is a named type after int for test purposes.
 type TestInt int
 
@@ -26,10 +20,10 @@ func (t TestInt) Sum(a interface{}) (n TestInt) {
 	return
 }
 
-// TestSumOper is a test structure to suite test a struct.
+// TestSumOp is a test structure to suite test a struct.
 type TestSumOp struct {
-	lastResultAsString string
-	Handicap           TestInt
+	LastResultAsString string  `json:"last_result"`
+	Handicap           TestInt `json:"handicap"`
 }
 
 // NewTestSumOp creates a new TestSumOp with a handicap h.
@@ -43,12 +37,6 @@ func NewTestSumOp(h int) (t *TestSumOp) {
 // Sum is a test method to suite test a struct.
 func (s *TestSumOp) Sum(a, b int) (x int) {
 	x = int(TestInt(a).Sum(b).Sum(s.Handicap))
-	s.lastResultAsString = fmt.Sprintf("%v", x)
-	return
-}
-
-// LastResultAsString is a test method to suite test a struct.
-func (s *TestSumOp) LastResultAsString() (r string) {
-	r = s.lastResultAsString
+	s.LastResultAsString = fmt.Sprintf("%v", x)
 	return
 }

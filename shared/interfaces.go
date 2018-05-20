@@ -1,11 +1,11 @@
-package mspec
+package shared
 
 import "time"
 
 // Assert is an interface used by each Specification that can used to
 // enforce a rule.
 //
-// Custom assertion packages may be defined by calling mspec.AssertionsFn(...).
+// Custom assertion packages may be defined by calling spec.SetAssertionsFn(...).
 // An internal assert/forward_assertions.go currently implements the default instance at runtime.
 type Assert interface {
 
@@ -142,13 +142,13 @@ type Assert interface {
 	// 	 assert.InDelta(t, math.Pi, (22 / 7.0), 0.01)
 	//
 	// Returns whether the assertion was successful (true) or not (false).
-	//InDelta(t TestingT, expected, actual interface{}, delta float64, msgAndArgs ...interface{}) bool
+	//InDelta(t Tester, expected, actual interface{}, delta float64, msgAndArgs ...interface{}) bool
 
 	// TODO Implement InEpsilon()
 	// InEpsilon asserts that expected and actual have a relative error less than epsilon
 	//
 	// Returns whether the assertion was successful (true) or not (false).
-	//InEpsilon(t TestingT, expected, actual interface{}, epsilon float64, msgAndArgs ...interface{}) bool
+	//InEpsilon(t Tester, expected, actual interface{}, epsilon float64, msgAndArgs ...interface{}) bool
 
 	// NoError asserts that a function returned no error (i.e. `nil`).
 	//
@@ -180,4 +180,9 @@ type Assert interface {
 	//
 	// Returns whether the assertion was successful (true) or not (false).
 	EqualError(theError error, errString string, msgAndArgs ...interface{}) bool
+}
+
+// Tester is an interface wrapper around *testing.T
+type Tester interface {
+	Errorf(format string, args ...interface{})
 }

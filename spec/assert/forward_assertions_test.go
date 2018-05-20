@@ -228,9 +228,9 @@ func TestEqualWrapper_Funcs(t *testing.T) {
 	var f1 f = func() int { return 1 }
 	var f2 f = func() int { return 2 }
 
-	var f1_copy f = f1
+	var f1Copy = f1
 
-	assert.Equal(f1_copy, f1, "Funcs are the same and should be considered equal")
+	assert.Equal(f1Copy, f1, "Funcs are the same and should be considered equal")
 	assert.NotEqual(f1, f2, "f1 and f2 are different")
 
 }
@@ -245,7 +245,7 @@ func TestNoErrorWrapper(t *testing.T) {
 	assert.True(mockAssert.NoError(err), "NoError should return True for nil arg")
 
 	// now set an error
-	err = errors.New("Some error")
+	err = errors.New("some error")
 
 	assert.False(mockAssert.NoError(err), "NoError with error should return False")
 
@@ -261,7 +261,7 @@ func TestErrorWrapper(t *testing.T) {
 	assert.False(mockAssert.Error(err), "Error should return False for nil arg")
 
 	// now set an error
-	err = errors.New("Some error")
+	err = errors.New("some error")
 
 	assert.True(mockAssert.Error(err), "Error with error should return True")
 

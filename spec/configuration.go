@@ -1,19 +1,31 @@
-package mspec
+package spec
 
 import (
 	"strings"
 
-	"github.com/ddspog/mspec/colors"
+	"github.com/ddspog/bdd/spec/colors"
+	"github.com/ddspog/bdd/shared"
 )
 
-var config *MSpecConfig
+const (
+	// OutputNone sets the system to print nothing.
+	OutputNone outputType = 1 << iota
+	// OutputStdout sets the system to print as usual on Stdout.
+	OutputStdout
+	// OutputStderr
+	// OutputHTML
+)
 
-func Config() *MSpecConfig {
-	return config
-}
+var (
+	// config represents the current configuration for system.
+	config *Configuration
+)
 
-// MSpecConfig defines the configuration used by the package.
-type MSpecConfig struct {
+// outputType defines the desired output for the specificationTesting information.
+type outputType int
+
+// Configuration defines the configuration used by the package.
+type Configuration struct {
 	Output outputType
 
 	AnsiOfFeature            string
@@ -26,7 +38,7 @@ type MSpecConfig struct {
 	AnsiOfCodeError          string
 	AnsiOfExpectedError      string
 
-	assertFn func(*Specification) Assert
+	assertFn func(*TestSpecification) shared.Assert
 
 	LastFeature string
 	LastGiven   string
@@ -34,6 +46,15 @@ type MSpecConfig struct {
 	LastSpec    string
 }
 
+// ResetLasts sets all lats variables to empty. This makes config ready
+// to print information about another context.
+func (c *Configuration) ResetLasts() {
+	c.LastGiven = ""
+	c.LastWhen = ""
+	c.LastSpec = ""
+}
+
+// init the configuration and assertions.
 func init() {
 	ResetConfig()
 
@@ -41,29 +62,35 @@ func init() {
 	SetVerbose()
 
 	// register the default Assertions package
-	AssertionsFn(func(s *Specification) Assert {
-		return newAssertions(s)
+	SetAssertionsFn(func(s *TestSpecification) (a shared.Assert) {
+		a = newAsserter(s)
+		return
 	})
 }
 
-// AssertionsFn will assign the assertions used for all tests.
-// The specified struct must implement the mspec.Assert interface.
+// Config returns current configuration for system.
+func Config() *Configuration {
+	return config
+}
+
+// SetAssertionsFn will assign the assertions used for all tests.
+// The specified struct must implement the spec.Assert interface.
 //
-//    mspec.AssertionsFn(func(s *Specification) Assert {
+//    spec.SetAssertionsFn(func(s *TestSpecification) Assert {
 //	    return &MyCustomAssertions{}
 //    })
-func AssertionsFn(fn func(s *Specification) Assert) {
+func SetAssertionsFn(fn func(s *TestSpecification) shared.Assert) {
 	config.assertFn = fn
 }
 
 // SetConfig takes a Config instance and will be used for all tests
 // until ResetConfig() is called.
 //
-//    mspec.SetConfig(Config{
+//    spec.SetConfig(Config{
 //      AnsiOfFeature: "",	// remove color coding for Feature
 //    })
 //
-func SetConfig(c MSpecConfig) {
+func SetConfig(c Configuration) {
 	config = &c
 }
 
@@ -71,7 +98,7 @@ func SetConfig(c MSpecConfig) {
 // Useful for custom colors in the middle of a specification.
 func ResetConfig() {
 	// setup a default configuration
-	config = &MSpecConfig{
+	config = &Configuration{
 		AnsiOfFeature:            strings.Join([]string{colors.White}, ""),
 		AnsiOfGiven:              strings.Join([]string{colors.Grey}, ""),
 		AnsiOfWhen:               strings.Join([]string{colors.LightGreen}, ""),
@@ -82,33 +109,4 @@ func ResetConfig() {
 		AnsiOfCodeError:          strings.Join([]string{colors.White, colors.Bold}, ""),
 		AnsiOfExpectedError:      strings.Join([]string{colors.Red}, ""),
 	}
-}
-
-// SetVerbose is used to set the output to Stdout (default).
-// Do not use this at this time.  The package API
-// will most likely change.
-func SetVerbose() {
-	config.Output = OutputStdout
-}
-
-// SetSilent is used to make all output silent.
-// Do not use this at this time.  The package API
-// will most likely change.
-func SetSilent() {
-	config.Output = OutputNone
-}
-
-type outputType int
-
-const (
-	OutputNone outputType = 1 << iota
-	OutputStdout
-	OutputStderr
-	OutputHTML
-)
-
-func (c *MSpecConfig) ResetLasts() {
-	c.LastGiven = ""
-	c.LastWhen = ""
-	c.LastSpec = ""
 }

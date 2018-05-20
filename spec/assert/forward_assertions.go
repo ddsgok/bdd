@@ -1,12 +1,15 @@
 package assert
 
-import "time"
+import (
+	"time"
+	"github.com/ddspog/bdd/shared"
+)
 
 type Assertions struct {
-	t TestingT
+	t shared.Tester
 }
 
-func New(t TestingT) *Assertions {
+func New(t shared.Tester) *Assertions {
 	return &Assertions{
 		t: t,
 	}
@@ -183,14 +186,14 @@ func (a *Assertions) WithinDuration(expected, actual time.Time, delta time.Durat
 // 	 assert.InDelta(t, math.Pi, (22 / 7.0), 0.01)
 //
 // Returns whether the assertion was successful (true) or not (false).
-func (a *Assertions) InDelta(t TestingT, expected, actual interface{}, delta float64, msgAndArgs ...interface{}) bool {
+func (a *Assertions) InDelta(t shared.Tester, expected, actual interface{}, delta float64, msgAndArgs ...interface{}) bool {
 	return InDelta(a.t, expected, actual, delta, msgAndArgs...)
 }
 
 // InEpsilon asserts that expected and actual have a relative error less than epsilon
 //
 // Returns whether the assertion was successful (true) or not (false).
-func (a *Assertions) InEpsilon(t TestingT, expected, actual interface{}, epsilon float64, msgAndArgs ...interface{}) bool {
+func (a *Assertions) InEpsilon(t shared.Tester, expected, actual interface{}, epsilon float64, msgAndArgs ...interface{}) bool {
 	return InEpsilon(a.t, expected, actual, epsilon, msgAndArgs...)
 }
 

@@ -274,7 +274,6 @@ func TestNotPanics(t *testing.T) {
 
 func TestEqual_Funcs(t *testing.T) {
 
-	type f func() int
 	f1 := func() int { return 1 }
 	f2 := func() int { return 2 }
 

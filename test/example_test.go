@@ -1,12 +1,12 @@
 package test
 
-import "github.com/ddspog/mspec/bdd"
+import "github.com/ddspog/bdd"
 
 //"testing"
 
 // func Example_BDD_Specifications(t *testing.T) {
 
-// 	Given(t, "a unique scenerio", func(when When) {
+// 	Given(t, "a unique scenario", func(when When) {
 
 // 		when("an event occurs", func(it It) {
 // 			it("should evaluate 1s are equal", func(assert bdd.Assert) {
@@ -63,7 +63,7 @@ import "github.com/ddspog/mspec/bdd"
 
 func Example() {
 
-	given, _, _ := bdd.Sentences()
+	given := bdd.Sentences().Given()
 
 	//var t *testing.T
 	// you can quickly spec new features with little syntax noise

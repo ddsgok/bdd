@@ -48,7 +48,7 @@ func (d *dog) Wash() error {
 		return nil
 	}
 
-	return errors.New("The paint is not washable!")
+	return errors.New("the paint is not washable")
 }
 
 func (d *dog) VisitVet() {

@@ -3,7 +3,7 @@ package examples
 import (
 	"testing"
 
-	. "github.com/ddspog/mspec/bdd"
+	. "github.com/ddspog/bdd"
 )
 
 /*
@@ -14,7 +14,7 @@ import (
 		  context is shared across all specs and assumes each specification
 		  will not mutex state.
 
-		* on a Per Spec basis, where the Setup and Teardown of
+		* on a Per It basis, where the Setup and Teardown of
 		  the context happens for each specification - mutating state before
 		  and after each spec is run.
 

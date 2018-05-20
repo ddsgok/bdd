@@ -1,6 +1,7 @@
 package bdd
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -13,13 +14,13 @@ import (
 // - I want to be able to test given with a simple call, or with a multiple call,
 // - So that I have more testing power.
 func Test_Simple_and_Multiple_Given(t *testing.T) {
-	given, like, s := Sentences()
+	given, like, s := Sentences().All()
 
 	given(t, "a TestSumOp ts with no handicap", func(when When) {
 		ts := NewTestSumOp(0)
 
-		when("ts.LastResultAsString() is called", func(it It) {
-			val := ts.LastResultAsString()
+		when("ts.LastResultAsString is called", func(it It) {
+			val := ts.LastResultAsString
 
 			it("should return a empty string", func(assert Assert) {
 				assert.Empty(val)
@@ -33,8 +34,8 @@ func Test_Simple_and_Multiple_Given(t *testing.T) {
 				assert.Equal(val, 3)
 			})
 
-			it("should have ts.LastResultAsString() return '3'", func(assert Assert) {
-				assert.Equal(ts.LastResultAsString(), "3")
+			it("should have ts.LastResultAsString return '3'", func(assert Assert) {
+				assert.Equal(ts.LastResultAsString, "3")
 			})
 		})
 	})
@@ -42,8 +43,8 @@ func Test_Simple_and_Multiple_Given(t *testing.T) {
 	given(t, "a TestSumOp ts with handicap %[1]v", func(when When, args ...interface{}) {
 		ts := NewTestSumOp(args[0].(int))
 
-		when("ts.LastResultAsString() is called", func(it It) {
-			val := ts.LastResultAsString()
+		when("ts.LastResultAsString is called", func(it It) {
+			val := ts.LastResultAsString
 
 			it("should return a empty string", func(assert Assert) {
 				assert.Empty(val)
@@ -57,8 +58,8 @@ func Test_Simple_and_Multiple_Given(t *testing.T) {
 				assert.Equal(val, args[3].(int))
 			})
 
-			it("should have ts.LastResultAsString() return '%[5]v'", func(assert Assert) {
-				assert.Equal(ts.LastResultAsString(), args[4].(string))
+			it("should have ts.LastResultAsString return '%[5]v'", func(assert Assert) {
+				assert.Equal(ts.LastResultAsString, args[4].(string))
 			})
 		})
 	}, like(
@@ -73,13 +74,13 @@ func Test_Simple_and_Multiple_Given(t *testing.T) {
 // - I want to be able to test when with a simple call, or with a multiple call,
 // - So that I have more testing power.
 func Test_Simple_and_Multiple_When(t *testing.T) {
-	given, like, s := Sentences()
+	given, like, s := Sentences().All()
 
 	given(t, "a empty TestSumOp ts", func(when When) {
 		var ts TestSumOp
 
-		when("ts.LastResultAsString() is called", func(it It) {
-			val := ts.LastResultAsString()
+		when("ts.LastResultAsString is called", func(it It) {
+			val := ts.LastResultAsString
 
 			it("should return a empty string", func(assert Assert) {
 				assert.Empty(val)
@@ -92,8 +93,9 @@ func Test_Simple_and_Multiple_When(t *testing.T) {
 			it("should return %[3]v", func(assert Assert) {
 				assert.Equal(val, args[2])
 			})
-			it("should have ts.LastResultAsString() return '%[4]v'", func(assert Assert) {
-				assert.Equal(ts.LastResultAsString(), args[3])
+
+			it("should have ts.LastResultAsString return '%[4]v'", func(assert Assert) {
+				assert.Equal(ts.LastResultAsString, args[3])
 			})
 		}, like(
 			s(1, 2, 3, "3"), s(2, 3, 5, "5"), s(-3, 2, -1, "-1"),
@@ -107,7 +109,7 @@ func Test_Simple_and_Multiple_When(t *testing.T) {
 // - I want to be able to test it with a simple call, or with a multiple call,
 // - So that I have more testing power.
 func Test_Simple_and_Multiple_It(t *testing.T) {
-	given, like, s := Sentences()
+	given, like, s := Sentences().All()
 
 	given(t, "a empty TestSumOp ts", func(when When) {
 		var ts TestSumOp
@@ -118,9 +120,11 @@ func Test_Simple_and_Multiple_It(t *testing.T) {
 			it("should have val equal to 3", func(assert Assert) {
 				assert.Equal(val, 3)
 			})
-			it("should have ts.LastResultAsString() return '3'", func(assert Assert) {
-				assert.Equal(ts.LastResultAsString(), "3")
+
+			it("should have ts.LastResultAsString return '3'", func(assert Assert) {
+				assert.Equal(ts.LastResultAsString, "3")
 			})
+
 			it("should have TestInt(val).Sum(%[1]v) return %[2]v", func(assert Assert, args ...interface{}) {
 				assert.Equal(TestInt(val).Sum(args[0].(int)), args[1].(int))
 			}, like(
@@ -136,7 +140,7 @@ func Test_Simple_and_Multiple_It(t *testing.T) {
 // - I want to be able to test with mixed multiple sentences, like given, when and it,
 // - So that I have more testing power.
 func Test_Mixed_Multiple_sentences(t *testing.T) {
-	given, like, s := Sentences()
+	given, like, s := Sentences().All()
 
 	given(t, "a empty TestSumOp ts with handicap %[1]v", func(when When, args ...interface{}) {
 		h := args[0].(int)
@@ -168,18 +172,16 @@ func Test_Mixed_Multiple_sentences(t *testing.T) {
 // - I want to be able to test with simple and multiple NonImplemented sentences,
 // - So I have more warnings to sentences not implemented.
 func Test_Simple_and_Multiple_NonImplemented_sentences(t *testing.T) {
-	given, like, s := Sentences()
+	given, like, s := Sentences().All()
 
 	given(t, "a empty TestSumOp ts", func(when When) {
-		when("ts.LastResultAsString() is called", func(it It) {
+		when("ts.LastResultAsString is called", func(it It) {
 			it("should return a empty string")
 		})
+
 		when("ts.Sum(%[1]v, %[2]v) is called", like(
-			s(1, 2),
-			s(-1, 2),
-			s(-1, 0),
-			s(3, 0),
-			s(13, 2),
+			s(1, 2), s(-1, 2), s(-1, 0),
+			s(3, 0), s(13, 2),
 		))
 	})
 
@@ -187,11 +189,38 @@ func Test_Simple_and_Multiple_NonImplemented_sentences(t *testing.T) {
 
 		when("val := ts.Sum(1, 2) is called", func(it It) {
 			it("should have val equal to 3")
-			it("should have ts.LastResultAsString() return '3'")
-			it("should have TestInt(val).Sum(%[1]v) return %[2]v", like(
-				s(0, 3), s(1, 4), s(2, 5), s(10, 13), s(3000, 3003),
-				s(-1, 2), s(-3, 0), s(-10, -7), s(-3000, -2997),
-			))
+			it("should have ts.LastResultAsString return '3'")
+			it("should have TestInt(val).Sum(%[1]v) return %[2]v", like(s(0, 3), s(1, 4), s(2, 5), s(10, 13), s(3000, 3003), s(-1, 2), s(-3, 0), s(-10, -7), s(-3000, -2997)))
+		})
+	})
+}
+
+func Test_Golden_JSON_sentences(t *testing.T) {
+	given := Sentences().Golden()
+	input, gold := &struct {
+		A int `json:"a"`
+		B int `json:"b"`
+	}{}, &struct {
+		Sum int        `json:"sum"`
+		Ts  *TestSumOp `json:"ts"`
+	}{}
+	given(t, "a empty TestSumOp ts", func(when When, golden Golden) {
+		golden.Load(input, gold)
+		ts := &TestSumOp{}
+		when(fmt.Sprintf("val := ts.Sum(%[1]v, %[2]v)", input.A, input.B), func(it It) {
+			val := ts.Sum(input.A, input.B)
+			it(fmt.Sprintf("should result to %[1]v", gold.Sum), func(assert Assert) {
+				assert.Equal(gold.Sum, val)
+			})
+			it(fmt.Sprintf("ts.Handicap should equal %[1]v", gold.Ts.Handicap), func(assert Assert) {
+				assert.Equal(gold.Ts.Handicap, ts.Handicap)
+			})
+			it(fmt.Sprintf("ts.LastResultAsString should equal %[1]v", gold.Ts.LastResultAsString), func(assert Assert) {
+				assert.Equal(gold.Ts.LastResultAsString, ts.LastResultAsString)
+			})
+			gold.Sum = val
+			gold.Ts = ts
+			golden.Update(gold)
 		})
 	})
 }

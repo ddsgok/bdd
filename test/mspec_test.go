@@ -4,20 +4,20 @@ import (
 	"math"
 	"testing"
 
-	"github.com/ddspog/mspec"
-	"github.com/ddspog/mspec/bdd"
+	"github.com/ddspog/bdd"
+	"github.com/ddspog/bdd/spec"
 )
 
 func Test_MSpec_Instances(t *testing.T) {
-	given, _, _ := bdd.Sentences()
+	given := bdd.Sentences().Given()
 
-	mspec.SetSilent()
+	spec.SetSilent()
 
-	given(t, "an mspec instance", func(when bdd.When) {
+	given(t, "an spec instance", func(when bdd.When) {
 
 		f := "feature value"
 
-		c := &mspec.MSpecConfig{
+		c := &spec.Configuration{
 			LastFeature: f,
 			LastGiven:   "context value",
 			LastWhen:    "when value",
@@ -52,10 +52,10 @@ func Test_MSpec_Instances(t *testing.T) {
 }
 
 func BenchmarkGivenStub(b *testing.B) {
-	mspec.SetSilent()
+	spec.SetSilent()
 	b.ResetTimer()
 
-	given, _, _ := bdd.Sentences()
+	given := bdd.Sentences().Given()
 
 	for i := 0; i < b.N; i++ {
 		t := &testing.T{}
@@ -64,10 +64,10 @@ func BenchmarkGivenStub(b *testing.B) {
 }
 
 func BenchmarkWhenStub(b *testing.B) {
-	mspec.SetSilent()
+	spec.SetSilent()
 	b.ResetTimer()
 
-	given, _, _ := bdd.Sentences()
+	given := bdd.Sentences().Given()
 
 	for i := 0; i < b.N; i++ {
 		t := &testing.T{}
@@ -78,10 +78,10 @@ func BenchmarkWhenStub(b *testing.B) {
 }
 
 func BenchmarkThenStub(b *testing.B) {
-	mspec.SetSilent()
+	spec.SetSilent()
 	b.ResetTimer()
 
-	given, _, _ := bdd.Sentences()
+	given := bdd.Sentences().Given()
 
 	for i := 0; i < b.N; i++ {
 		t := &testing.T{}
@@ -94,10 +94,10 @@ func BenchmarkThenStub(b *testing.B) {
 }
 
 func BenchmarkError(b *testing.B) {
-	mspec.SetSilent()
+	spec.SetSilent()
 	b.ResetTimer()
 
-	given, _, _ := bdd.Sentences()
+	given := bdd.Sentences().Given()
 
 	for i := 0; i < b.N; i++ {
 		t := &testing.T{}
@@ -112,10 +112,10 @@ func BenchmarkError(b *testing.B) {
 }
 
 func BenchmarkSimpleMspec(b *testing.B) {
-	mspec.SetSilent()
+	spec.SetSilent()
 	b.ResetTimer()
 
-	given, _, _ := bdd.Sentences()
+	given := bdd.Sentences().Given()
 
 	for i := 0; i < b.N; i++ {
 		t := &testing.T{}
@@ -133,7 +133,7 @@ func BenchmarkSimpleMspec(b *testing.B) {
 }
 
 func BenchmarkSimpleTest(b *testing.B) {
-	mspec.SetSilent()
+	spec.SetSilent()
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		t := &testing.T{} // get accurate GC numbers
@@ -148,10 +148,10 @@ func BenchmarkSimpleTest(b *testing.B) {
 }
 
 func BenchmarkComplexMspec(b *testing.B) {
-	mspec.SetSilent()
+	spec.SetSilent()
 	b.ResetTimer()
 
-	given, _, _ := bdd.Sentences()
+	given := bdd.Sentences().Given()
 
 	for i := 0; i < b.N; i++ {
 		t := &testing.T{}
@@ -215,7 +215,7 @@ func BenchmarkComplexMspec(b *testing.B) {
 }
 
 func BenchmarkComplexTest(b *testing.B) {
-	mspec.SetSilent()
+	spec.SetSilent()
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		t := &testing.T{} // get accurate GC numbers

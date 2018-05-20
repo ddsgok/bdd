@@ -1,4 +1,4 @@
-/*Package mspec is a BDD context/specification testing package for Go(Lang) with a strong emphases on spec'ing your feature(s) and scenarios first, before any code is written using as little syntax noise as possible.  This leaves you free to think of your project and features as a whole without the distraction of writing any code with the added benefit of having tests ready for your project.
+/*Package spec is a BDD context/specification specificationTesting package for Go(Lang) with a strong emphases on spec'ing your feature(s) and scenarios first, before any code is written using as little syntax noise as possible.  This leaves you free to think of your project and features as a whole without the distraction of writing any code with the added benefit of having tests ready for your project.
 
 [![GoDoc](https://godoc.org/github.com/ddspog/mspec?status.svg)](https://godoc.org/github.com/ddspog/mspec) holds the source documentation (where else?)
 
@@ -11,7 +11,7 @@ Features
 * Use custom Assertions
 * Configuration options
 * Uses Testify's rich assertions
-* Uses Go's built-in testing.T package
+* Uses Go's built-in specificationTesting.T package
 
 Go Get It
 
@@ -49,10 +49,10 @@ You represent these thoughts in code like this:
 
 	import (
 	    . "github.com/eduncan911/gomspec"
-	    "testing"
+	    "specificationTesting"
 	)
 
-	func Test_Public_API_Contract(t *testing.T) {
+	func Test_Public_API_Contract(t *specificationTesting.T) {
 
 	    Given(t, "an invalid Api", func(when When) {
 
@@ -120,7 +120,7 @@ It is not uncommon to go back and tweak your stories over time as you talk with 
 
 
 
-`GoMSpec` is a testing package for the Go framework that extends Go's built-in testing package.  It is modeled after the BDD Feature Specification story workflow such as:
+`GoMSpec` is a specificationTesting package for the Go framework that extends Go's built-in specificationTesting package.  It is modeled after the BDD Feature TestSpecification story workflow such as:
 
   With Feature X
     Given a context
@@ -145,10 +145,10 @@ Writing Specs
 
 	import (
 	    . "github.com/eduncan911/gomspec"
-	    "testing"
+	    "specificationTesting"
 	)
 
-	func Test_Washing_Dogs(t *testing.T) {
+	func Test_Washing_Dogs(t *specificationTesting.T) {
 
 	    Given(t, "a dog that has been painted red\nand the paint is washable\nand no one has washed the dog yet", func(when When) {
 
@@ -201,7 +201,7 @@ Nice eh?
 
 Testing
 
-There is nothing like using a testing package to test itself.  There is
+There is nothing like using a specificationTesting package to test itself.  There is
 some nice rich information available.
 
   go test
@@ -219,9 +219,9 @@ Why Another BDD Framework
 
 When evaluating several BDD frameworks, [Pranavraja's Zen](https://github.com/pranavraja/zen) package for Go came close - really close; but, it was lacking the more "story" overview I've been accustomed to over the years with [Machine.Specifications](https://github.com/machine/machine.specifications) in C# (.NET land).
 
-Do note that there is something to be said for simple testing in Go (and simple coding); therefore, if you are the type to keep it short and sweet and just code, then you may want to use Pranavraja's framework as it is just the context (Desc) and specs writing.
+Do note that there is something to be said for simple specificationTesting in Go (and simple coding); therefore, if you are the type to keep it short and sweet and just code, then you may want to use Pranavraja's framework as it is just the context (Desc) and specs writing.
 
-I forked his code and submitted a few bug tweaks at first.  But along the way, I started to have grand visions of my soul mate [Machine.Specifications](https://github.com/machine/machine.specifications) (which is called MSpec for short) for BDD testing.  The ease of defining complete stories right down to the scenarios without having to implement them intrigued me in C#.  It freed me from worrying about implementation details and just focus on the feature I was writing: What did it need to do?  What context was I given to start with? What should it do?
+I forked his code and submitted a few bug tweaks at first.  But along the way, I started to have grand visions of my soul mate [Machine.Specifications](https://github.com/machine/machine.specifications) (which is called MSpec for short) for BDD specificationTesting.  The ease of defining complete stories right down to the scenarios without having to implement them intrigued me in C#.  It freed me from worrying about implementation details and just focus on the feature I was writing: What did it need to do?  What context was I given to start with? What should it do?
 
 So while using Pranavraja's Zen framework, I kept asking myself: Could I bring those MSpec practices to Go, using a bare-bones framework?  Ok, done.  And since it was so heavily inspired by Aaron's MSpec project, I kept the name going here: `GoMSpec`.
 
@@ -246,4 +246,4 @@ Therefore, you are free to code specs with just a little syntax noise:
 	it("should not be from the year 8,000 BC", NA())
 
 */
-package mspec
+package spec

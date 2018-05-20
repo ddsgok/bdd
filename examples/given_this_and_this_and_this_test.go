@@ -3,7 +3,7 @@ package examples
 import (
 	"testing"
 
-	. "github.com/ddspog/mspec/bdd"
+	. "github.com/ddspog/bdd"
 )
 
 func Test_Given_this_and_this_and_this(t *testing.T) {

@@ -3,10 +3,10 @@ package examples
 import (
 	"testing"
 
-	. "github.com/ddspog/mspec/bdd"
+	. "github.com/ddspog/bdd"
 )
 
-func Test_Specing_A_New_Feature(t *testing.T) {
+func Test_Designing_A_New_Feature(t *testing.T) {
 
 	// MSpec was designed to let you capture your free formed thoughts
 	// as you dream up the next big idea.  forget all about coding, how
@@ -53,7 +53,7 @@ func Test_Specing_A_New_Feature(t *testing.T) {
 
 	/* Outputs:
 
-	Feature: Specing A New Feature
+	Feature: Designing A New Feature
 	  Given a valid Api
 
 	  Given an invalid Api
