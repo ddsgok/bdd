@@ -14,6 +14,7 @@ var (
 	update                     = flag.Bool(FlagName, false, "Update golden test file fixture")
 )
 
+// WillUpdate verifies if update flag was set.
 func WillUpdate() (b bool) {
 	b = *update
 	return

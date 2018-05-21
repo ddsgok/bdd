@@ -195,6 +195,10 @@ func Test_Simple_and_Multiple_NonImplemented_sentences(t *testing.T) {
 	})
 }
 
+// Feature Golden JSON sentences
+// - As a developer,
+// - I want to be able to test using golden JSON files with test cases,
+// - So I can update easily those test cases, and test many times.
 func Test_Golden_JSON_sentences(t *testing.T) {
 	given := Sentences().Golden()
 	input, gold := &struct {

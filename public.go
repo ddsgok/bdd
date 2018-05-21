@@ -1,7 +1,6 @@
 package bdd
 
 import (
-	"github.com/ddspog/bdd/internal/golden"
 	"github.com/ddspog/bdd/shared"
 )
 
@@ -16,7 +15,7 @@ type Assert = shared.Assert
 
 // Golden defines an object to access test input and output through
 // various test cases.
-type Golden = golden.Golden
+type Golden = shared.Golden
 
 // Arguments defines a set of arguments, to run on Given, When or It sentences.
 type Arguments []interface{}

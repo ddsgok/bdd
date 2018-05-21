@@ -186,3 +186,9 @@ type Assert interface {
 type Tester interface {
 	Errorf(format string, args ...interface{})
 }
+
+// Golden allows to retrieve information and update golden files.
+type Golden interface {
+	Load(interface{}, interface{})
+	Update(interface{})
+}
