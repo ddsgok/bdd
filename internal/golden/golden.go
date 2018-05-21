@@ -5,7 +5,7 @@ import (
 	"io/ioutil"
 	"path/filepath"
 
-	"github.com/ddspog/bdd/shared"
+	"github.com/ddspog/bdd/internal/shared"
 )
 
 var (

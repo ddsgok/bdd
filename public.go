@@ -1,7 +1,7 @@
 package bdd
 
 import (
-	"github.com/ddspog/bdd/shared"
+	"github.com/ddspog/bdd/internal/shared"
 )
 
 // When defines the action or event when Given a specific context.

@@ -2,7 +2,8 @@ package assert
 
 import (
 	"time"
-	"github.com/ddspog/bdd/shared"
+
+	"github.com/ddspog/bdd/internal/shared"
 )
 
 type Assertions struct {

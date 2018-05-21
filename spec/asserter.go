@@ -3,7 +3,8 @@ package spec
 import (
 	"fmt"
 	"strings"
-	"github.com/ddspog/bdd/shared"
+
+	"github.com/ddspog/bdd/internal/shared"
 	"github.com/ddspog/bdd/spec/assert"
 )
 

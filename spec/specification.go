@@ -8,8 +8,8 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/ddspog/bdd/internal/shared"
 	"github.com/ddspog/bdd/spec/colors"
-	"github.com/ddspog/bdd/shared"
 )
 
 // failingLineData stores information about error, captured on assert
@@ -130,9 +130,9 @@ func (spec *TestSpecification) Run() {
 
 func New(t *testing.T, feat, given string) (sp *TestSpecification) {
 	sp = &TestSpecification{
-		T: t,
+		T:       t,
 		Feature: feat,
-		Given: given,
+		Given:   given,
 	}
 	return
 }

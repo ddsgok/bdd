@@ -8,7 +8,8 @@ import (
 	"runtime"
 	"strings"
 	"time"
-	"github.com/ddspog/bdd/shared"
+
+	"github.com/ddspog/bdd/internal/shared"
 )
 
 var (
