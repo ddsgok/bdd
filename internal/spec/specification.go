@@ -9,7 +9,7 @@ import (
 	"testing"
 
 	"github.com/ddspog/bdd/internal/colors"
-	"github.com/ddspog/bdd/internal/shared"
+	"github.com/ddspog/bdd/internal/common"
 )
 
 // failingLineData stores information about error, captured on assert
@@ -30,7 +30,7 @@ type TestSpecification struct {
 	Given                   string
 	When                    string
 	It                      string
-	AssertFn                func(shared.Assert)
+	AssertFn                func(common.Assert)
 	AssertionFailed         bool
 	AssertionFailedMessages []string
 

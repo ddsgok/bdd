@@ -3,11 +3,11 @@ package assert
 import (
 	"time"
 
-	"github.com/ddspog/bdd/internal/shared"
+	"github.com/ddspog/bdd/internal/common"
 )
 
 type Assertions struct {
-	t shared.Tester
+	t common.Tester
 }
 
 // Fail reports a failure through
@@ -181,14 +181,14 @@ func (a *Assertions) WithinDuration(expected, actual time.Time, delta time.Durat
 // 	 assert.InDelta(t, math.Pi, (22 / 7.0), 0.01)
 //
 // Returns whether the assertion was successful (true) or not (false).
-func (a *Assertions) InDelta(t shared.Tester, expected, actual interface{}, delta float64, msgAndArgs ...interface{}) bool {
+func (a *Assertions) InDelta(t common.Tester, expected, actual interface{}, delta float64, msgAndArgs ...interface{}) bool {
 	return InDelta(a.t, expected, actual, delta, msgAndArgs...)
 }
 
 // InEpsilon asserts that expected and actual have a relative error less than epsilon
 //
 // Returns whether the assertion was successful (true) or not (false).
-func (a *Assertions) InEpsilon(t shared.Tester, expected, actual interface{}, epsilon float64, msgAndArgs ...interface{}) bool {
+func (a *Assertions) InEpsilon(t common.Tester, expected, actual interface{}, epsilon float64, msgAndArgs ...interface{}) bool {
 	return InEpsilon(a.t, expected, actual, epsilon, msgAndArgs...)
 }
 
@@ -229,7 +229,7 @@ func (a *Assertions) EqualError(theError error, errString string, msgAndArgs ...
 	return EqualError(a.t, theError, errString, msgAndArgs...)
 }
 
-func New(t shared.Tester) *Assertions {
+func New(t common.Tester) *Assertions {
 	return &Assertions{
 		t: t,
 	}

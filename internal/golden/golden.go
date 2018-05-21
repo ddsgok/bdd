@@ -5,7 +5,7 @@ import (
 	"io/ioutil"
 	"path/filepath"
 
-	"github.com/ddspog/bdd/internal/shared"
+	"github.com/ddspog/bdd/internal/common"
 )
 
 var (
@@ -50,7 +50,7 @@ type Manager struct {
 }
 
 // Get returns the ith test case for the feature tested in manager.
-func (m *Manager) Get(i int) (g shared.Golden) {
+func (m *Manager) Get(i int) (g common.Golden) {
 	g = m.goldies[i]
 	return
 }

@@ -11,7 +11,7 @@ import (
 	specification:
 
 		* on a Per Context basis, where the same instance of the
-		  context is shared across all specs and assumes each specification
+		  context is common across all specs and assumes each specification
 		  will not mutex state.
 
 		* on a Per It basis, where the Setup and Teardown of
@@ -27,7 +27,7 @@ import (
 
 func Test_Setup_Shared_Context(t *testing.T) {
 
-	// this example shows the default shared context does not mutate.
+	// this example shows the default common context does not mutate.
 	//
 
 	Given(t, "a dog that has been painted\nand the paint is washable", func(when When) {
@@ -36,7 +36,7 @@ func Test_Setup_Shared_Context(t *testing.T) {
 		//
 		d := BirthDog()
 
-		// setup the shared context that runs just once
+		// setup the common context that runs just once
 		//
 		p := &paint{
 			color:      "red",

@@ -5,13 +5,13 @@ import (
 	"strings"
 
 	"github.com/ddspog/bdd/internal/assert"
-	"github.com/ddspog/bdd/internal/shared"
+	"github.com/ddspog/bdd/internal/common"
 )
 
 // specificationTesting is the glue used to bind assertions to the
 // spec package as the default asserting package.
 //
-// specificationTesting implements the shared.Tester interface with
+// specificationTesting implements the common.Tester interface with
 // Errorf(...) func.
 //
 // It is used to print the specification portion to the output when an
@@ -72,7 +72,7 @@ func (m *specificationTesting) Errorf(format string, args ...interface{}) {
 }
 
 // newAsserter constructs a wrapper around Testify's asserts.
-func newAsserter(s *TestSpecification) (a shared.Assert) {
+func newAsserter(s *TestSpecification) (a common.Assert) {
 	a = assert.New(&specificationTesting{
 		spec: s,
 	})

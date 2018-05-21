@@ -4,7 +4,7 @@ import (
 	"strings"
 
 	"github.com/ddspog/bdd/internal/colors"
-	"github.com/ddspog/bdd/internal/shared"
+	"github.com/ddspog/bdd/internal/common"
 )
 
 const (
@@ -38,7 +38,7 @@ type Configuration struct {
 	AnsiOfCodeError          string
 	AnsiOfExpectedError      string
 
-	assertFn func(*TestSpecification) shared.Assert
+	assertFn func(*TestSpecification) common.Assert
 
 	LastFeature string
 	LastGiven   string
@@ -62,7 +62,7 @@ func init() {
 	SetVerbose()
 
 	// register the default Assertions package
-	SetAssertionsFn(func(s *TestSpecification) (a shared.Assert) {
+	SetAssertionsFn(func(s *TestSpecification) (a common.Assert) {
 		a = newAsserter(s)
 		return
 	})
@@ -79,7 +79,7 @@ func Config() *Configuration {
 //    spec.SetAssertionsFn(func(s *TestSpecification) Assert {
 //	    return &MyCustomAssertions{}
 //    })
-func SetAssertionsFn(fn func(s *TestSpecification) shared.Assert) {
+func SetAssertionsFn(fn func(s *TestSpecification) common.Assert) {
 	config.assertFn = fn
 }
 

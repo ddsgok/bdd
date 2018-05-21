@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ddspog/bdd/internal/shared"
+	"github.com/ddspog/bdd/internal/common"
 )
 
 var (
@@ -164,7 +164,7 @@ func indentMessageLines(message string, tabs int) (r string) {
 }
 
 // Fail reports a failure through
-func Fail(t shared.Tester, failureMessage string, msgAndArgs ...interface{}) (b bool) {
+func Fail(t common.Tester, failureMessage string, msgAndArgs ...interface{}) (b bool) {
 	message := messageFromMsgAndArgs(msgAndArgs...)
 
 	if len(message) > 0 {
@@ -189,7 +189,7 @@ func Fail(t shared.Tester, failureMessage string, msgAndArgs ...interface{}) (b 
 // Implements asserts that an object is implemented by the specified interface.
 //
 //    assert.Implements(t, (*MyInterface)(nil), new(MyObject), "MyObject")
-func Implements(t shared.Tester, interfaceObject interface{}, object interface{}, msgAndArgs ...interface{}) (b bool) {
+func Implements(t common.Tester, interfaceObject interface{}, object interface{}, msgAndArgs ...interface{}) (b bool) {
 	interfaceType := reflect.TypeOf(interfaceObject).Elem()
 
 	if !reflect.TypeOf(object).Implements(interfaceType) {
@@ -202,7 +202,7 @@ func Implements(t shared.Tester, interfaceObject interface{}, object interface{}
 }
 
 // IsType asserts that the specified objects are of the same type.
-func IsType(t shared.Tester, expectedType interface{}, object interface{}, msgAndArgs ...interface{}) (b bool) {
+func IsType(t common.Tester, expectedType interface{}, object interface{}, msgAndArgs ...interface{}) (b bool) {
 	if !ObjectsAreEqual(reflect.TypeOf(object), reflect.TypeOf(expectedType)) {
 		b = Fail(t, fmt.Sprintf("Object expected to be of type %v, but was %v", reflect.TypeOf(expectedType), reflect.TypeOf(object)), msgAndArgs...)
 		return
@@ -217,7 +217,7 @@ func IsType(t shared.Tester, expectedType interface{}, object interface{}, msgAn
 //    assert.Equal(t, 123, 123, "123 and 123 should be equal")
 //
 // Returns whether the assertion was successful (true) or not (false).
-func Equal(t shared.Tester, expected, actual interface{}, msgAndArgs ...interface{}) (b bool) {
+func Equal(t common.Tester, expected, actual interface{}, msgAndArgs ...interface{}) (b bool) {
 	if !ObjectsAreEqual(expected, actual) {
 		b = Fail(t, fmt.Sprintf("Not equal: %#v (expected)\n"+
 			"        != %#v (actual)", expected, actual), msgAndArgs...)
@@ -233,7 +233,7 @@ func Equal(t shared.Tester, expected, actual interface{}, msgAndArgs ...interfac
 //    assert.Exactly(t, int32(123), int64(123), "123 and 123 should NOT be equal")
 //
 // Returns whether the assertion was successful (true) or not (false).
-func Exactly(t shared.Tester, expected, actual interface{}, msgAndArgs ...interface{}) (b bool) {
+func Exactly(t common.Tester, expected, actual interface{}, msgAndArgs ...interface{}) (b bool) {
 	if aType, bType := reflect.TypeOf(expected), reflect.TypeOf(actual); aType != bType {
 		b = Fail(t, "Types expected to match exactly", "%v != %v", aType, bType)
 	} else {
@@ -248,7 +248,7 @@ func Exactly(t shared.Tester, expected, actual interface{}, msgAndArgs ...interf
 //    assert.NotNil(t, err, "err should be something")
 //
 // Returns whether the assertion was successful (true) or not (false).
-func NotNil(t shared.Tester, object interface{}, msgAndArgs ...interface{}) (success bool) {
+func NotNil(t common.Tester, object interface{}, msgAndArgs ...interface{}) (success bool) {
 	success = true
 
 	if object == nil {
@@ -288,7 +288,7 @@ func isNil(object interface{}) (b bool) {
 //    assert.Nil(t, err, "err should be nothing")
 //
 // Returns whether the assertion was successful (true) or not (false).
-func Nil(t shared.Tester, object interface{}, msgAndArgs ...interface{}) (b bool) {
+func Nil(t common.Tester, object interface{}, msgAndArgs ...interface{}) (b bool) {
 	if isNil(object) {
 		b = true
 	} else {
@@ -343,7 +343,7 @@ func isEmpty(object interface{}) bool {
 // assert.Empty(t, obj)
 //
 // Returns whether the assertion was successful (true) or not (false).
-func Empty(t shared.Tester, object interface{}, msgAndArgs ...interface{}) bool {
+func Empty(t common.Tester, object interface{}, msgAndArgs ...interface{}) bool {
 
 	pass := isEmpty(object)
 	if !pass {
@@ -362,7 +362,7 @@ func Empty(t shared.Tester, object interface{}, msgAndArgs ...interface{}) bool 
 // }
 //
 // Returns whether the assertion was successful (true) or not (false).
-func NotEmpty(t shared.Tester, object interface{}, msgAndArgs ...interface{}) bool {
+func NotEmpty(t common.Tester, object interface{}, msgAndArgs ...interface{}) bool {
 
 	pass := !isEmpty(object)
 	if !pass {
@@ -391,7 +391,7 @@ func getLen(x interface{}) (ok bool, length int) {
 //    assert.Len(t, mySlice, 3, "The size of slice is not 3")
 //
 // Returns whether the assertion was successful (true) or not (false).
-func Len(t shared.Tester, object interface{}, length int, msgAndArgs ...interface{}) bool {
+func Len(t common.Tester, object interface{}, length int, msgAndArgs ...interface{}) bool {
 	ok, l := getLen(object)
 	if !ok {
 		return Fail(t, fmt.Sprintf("\"%s\" could not be applied builtin len()", object), msgAndArgs...)
@@ -408,7 +408,7 @@ func Len(t shared.Tester, object interface{}, length int, msgAndArgs ...interfac
 //    assert.True(t, myBool, "myBool should be true")
 //
 // Returns whether the assertion was successful (true) or not (false).
-func True(t shared.Tester, value bool, msgAndArgs ...interface{}) bool {
+func True(t common.Tester, value bool, msgAndArgs ...interface{}) bool {
 
 	if value != true {
 		return Fail(t, "Should be true", msgAndArgs...)
@@ -423,7 +423,7 @@ func True(t shared.Tester, value bool, msgAndArgs ...interface{}) bool {
 //    assert.False(t, myBool, "myBool should be false")
 //
 // Returns whether the assertion was successful (true) or not (false).
-func False(t shared.Tester, value bool, msgAndArgs ...interface{}) bool {
+func False(t common.Tester, value bool, msgAndArgs ...interface{}) bool {
 
 	if value != false {
 		return Fail(t, "Should be false", msgAndArgs...)
@@ -438,7 +438,7 @@ func False(t shared.Tester, value bool, msgAndArgs ...interface{}) bool {
 //    assert.NotEqual(t, obj1, obj2, "two objects shouldn't be equal")
 //
 // Returns whether the assertion was successful (true) or not (false).
-func NotEqual(t shared.Tester, expected, actual interface{}, msgAndArgs ...interface{}) bool {
+func NotEqual(t common.Tester, expected, actual interface{}, msgAndArgs ...interface{}) bool {
 
 	if ObjectsAreEqual(expected, actual) {
 		return Fail(t, "Should not be equal", msgAndArgs...)
@@ -453,7 +453,7 @@ func NotEqual(t shared.Tester, expected, actual interface{}, msgAndArgs ...inter
 //    assert.Contains(t, "Hello World", "World", "But 'Hello World' does contain 'World'")
 //
 // Returns whether the assertion was successful (true) or not (false).
-func Contains(t shared.Tester, s, contains string, msgAndArgs ...interface{}) bool {
+func Contains(t common.Tester, s, contains string, msgAndArgs ...interface{}) bool {
 
 	if !strings.Contains(s, contains) {
 		return Fail(t, fmt.Sprintf("\"%s\" does not contain \"%s\"", s, contains), msgAndArgs...)
@@ -468,7 +468,7 @@ func Contains(t shared.Tester, s, contains string, msgAndArgs ...interface{}) bo
 //    assert.NotContains(t, "Hello World", "Earth", "But 'Hello World' does NOT contain 'Earth'")
 //
 // Returns whether the assertion was successful (true) or not (false).
-func NotContains(t shared.Tester, s, contains string, msgAndArgs ...interface{}) bool {
+func NotContains(t common.Tester, s, contains string, msgAndArgs ...interface{}) bool {
 
 	if strings.Contains(s, contains) {
 		return Fail(t, fmt.Sprintf("\"%s\" should not contain \"%s\"", s, contains), msgAndArgs...)
@@ -479,7 +479,7 @@ func NotContains(t shared.Tester, s, contains string, msgAndArgs ...interface{})
 }
 
 // Condition uses a Comparison to assert a complex condition.
-func Condition(t shared.Tester, comp Comparison, msgAndArgs ...interface{}) bool {
+func Condition(t common.Tester, comp Comparison, msgAndArgs ...interface{}) bool {
 	result := comp()
 	if !result {
 		Fail(t, "Condition failed!", msgAndArgs...)
@@ -516,7 +516,7 @@ func didPanic(f PanicTestFunc) (bool, interface{}) {
 //   }, "Calling GoCrazy() should panic")
 //
 // Returns whether the assertion was successful (true) or not (false).
-func Panics(t shared.Tester, f PanicTestFunc, msgAndArgs ...interface{}) bool {
+func Panics(t common.Tester, f PanicTestFunc, msgAndArgs ...interface{}) bool {
 
 	if funcDidPanic, panicValue := didPanic(f); !funcDidPanic {
 		return Fail(t, fmt.Sprintf("func %#v should panic\n\r\tPanic value:\t%v", f, panicValue), msgAndArgs...)
@@ -532,7 +532,7 @@ func Panics(t shared.Tester, f PanicTestFunc, msgAndArgs ...interface{}) bool {
 //   }, "Calling RemainCalm() should NOT panic")
 //
 // Returns whether the assertion was successful (true) or not (false).
-func NotPanics(t shared.Tester, f PanicTestFunc, msgAndArgs ...interface{}) bool {
+func NotPanics(t common.Tester, f PanicTestFunc, msgAndArgs ...interface{}) bool {
 
 	if funcDidPanic, panicValue := didPanic(f); funcDidPanic {
 		return Fail(t, fmt.Sprintf("func %#v should not panic\n\r\tPanic value:\t%v", f, panicValue), msgAndArgs...)
@@ -546,7 +546,7 @@ func NotPanics(t shared.Tester, f PanicTestFunc, msgAndArgs ...interface{}) bool
 //   assert.WithinDuration(t, time.Now(), time.Now(), 10*time.Second, "The difference should not be more than 10s")
 //
 // Returns whether the assertion was successful (true) or not (false).
-func WithinDuration(t shared.Tester, expected, actual time.Time, delta time.Duration, msgAndArgs ...interface{}) bool {
+func WithinDuration(t common.Tester, expected, actual time.Time, delta time.Duration, msgAndArgs ...interface{}) bool {
 
 	dt := expected.Sub(actual)
 	if dt < -delta || dt > delta {
@@ -596,7 +596,7 @@ func toFloat(x interface{}) (float64, bool) {
 // 	 assert.InDelta(t, math.Pi, (22 / 7.0), 0.01)
 //
 // Returns whether the assertion was successful (true) or not (false).
-func InDelta(t shared.Tester, expected, actual interface{}, delta float64, msgAndArgs ...interface{}) bool {
+func InDelta(t common.Tester, expected, actual interface{}, delta float64, msgAndArgs ...interface{}) bool {
 
 	af, aok := toFloat(expected)
 	bf, bok := toFloat(actual)
@@ -641,7 +641,7 @@ func calcEpsilonDelta(expected, actual interface{}, epsilon float64) float64 {
 // InEpsilon asserts that expected and actual have a relative error less than epsilon
 //
 // Returns whether the assertion was successful (true) or not (false).
-func InEpsilon(t shared.Tester, expected, actual interface{}, epsilon float64, msgAndArgs ...interface{}) bool {
+func InEpsilon(t common.Tester, expected, actual interface{}, epsilon float64, msgAndArgs ...interface{}) bool {
 	delta := calcEpsilonDelta(expected, actual, epsilon)
 
 	return InDelta(t, expected, actual, delta, msgAndArgs...)
@@ -659,7 +659,7 @@ func InEpsilon(t shared.Tester, expected, actual interface{}, epsilon float64, m
 //   }
 //
 // Returns whether the assertion was successful (true) or not (false).
-func NoError(t shared.Tester, err error, msgAndArgs ...interface{}) bool {
+func NoError(t common.Tester, err error, msgAndArgs ...interface{}) bool {
 	if isNil(err) {
 		return true
 	}
@@ -675,7 +675,7 @@ func NoError(t shared.Tester, err error, msgAndArgs ...interface{}) bool {
 //   }
 //
 // Returns whether the assertion was successful (true) or not (false).
-func Error(t shared.Tester, err error, msgAndArgs ...interface{}) bool {
+func Error(t common.Tester, err error, msgAndArgs ...interface{}) bool {
 
 	message := messageFromMsgAndArgs(msgAndArgs...)
 	return NotNil(t, err, "An error is expected but got nil. %s", message)
@@ -691,7 +691,7 @@ func Error(t shared.Tester, err error, msgAndArgs ...interface{}) bool {
 //   }
 //
 // Returns whether the assertion was successful (true) or not (false).
-func EqualError(t shared.Tester, theError error, errString string, msgAndArgs ...interface{}) bool {
+func EqualError(t common.Tester, theError error, errString string, msgAndArgs ...interface{}) bool {
 
 	message := messageFromMsgAndArgs(msgAndArgs...)
 	if !NotNil(t, theError, "An error is expected but got nil. %s", message) {
