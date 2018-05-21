@@ -4,7 +4,7 @@ import (
 	"strings"
 
 	"github.com/ddspog/bdd/internal/shared"
-	"github.com/ddspog/bdd/spec/colors"
+	"github.com/ddspog/bdd/internal/spec/colors"
 )
 
 const (

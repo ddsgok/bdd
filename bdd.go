@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/ddspog/bdd/internal/golden"
-	"github.com/ddspog/bdd/spec"
+	"github.com/ddspog/bdd/internal/spec"
 )
 
 // Given defines one Feature's specific context to be tested.

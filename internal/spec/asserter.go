@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	"github.com/ddspog/bdd/internal/shared"
-	"github.com/ddspog/bdd/spec/assert"
+	"github.com/ddspog/bdd/internal/spec/assert"
 )
 
 // specificationTesting is the glue used to bind assertions to the
