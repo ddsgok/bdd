@@ -33,6 +33,10 @@ var (
 // Comparison a custom function that returns true on success and false on failure
 type Comparison func() bool
 
+// PanicTestFunc defines a func that should be passed to the assert.Panics and assert.NotPanics
+// methods, and represents a simple func that takes no arguments, and returns nothing.
+type PanicTestFunc func()
+
 /*
 	Helper functions
 */
@@ -482,10 +486,6 @@ func Condition(t shared.Tester, comp Comparison, msgAndArgs ...interface{}) bool
 	}
 	return result
 }
-
-// PanicTestFunc defines a func that should be passed to the assert.Panics and assert.NotPanics
-// methods, and represents a simple func that takes no arguments, and returns nothing.
-type PanicTestFunc func()
 
 // didPanic returns true if the function passed to it panics. Otherwise, it returns false.
 func didPanic(f PanicTestFunc) (bool, interface{}) {

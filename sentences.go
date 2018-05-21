@@ -41,16 +41,15 @@ func (sm *sentencesManagement) All() (given func(*testing.T, string, ...interfac
 	return
 }
 
-// Sentences return the manager for sentences, with options for user to
-// choose desired testing style.
-func Sentences() (sm SentencesManager) {
-	sm = sentences
-	return
-}
-
 // newSentencesManager creates a empty sentences manager.
 func newSentencesManager() (sm SentencesManager) {
 	sm = &sentencesManagement{}
 	return
 }
 
+// Sentences return the manager for sentences, with options for user to
+// choose desired testing style.
+func Sentences() (sm SentencesManager) {
+	sm = sentences
+	return
+}

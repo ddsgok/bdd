@@ -6,17 +6,6 @@ type testFunc struct {
 	fn interface{}
 }
 
-// newTestFunc creates a test func using arguments. Will check for
-// errors.
-func newTestFunc(args ...interface{}) (tb testFunc) {
-	if len(args) > 1 {
-		panic(ErrWrongNumTestFuncs)
-	}
-
-	tb = testFunc{args[0]}
-	return
-}
-
 // asWhenFunc return test function as When function.
 func (tb testFunc) asWhenFunc() (wfn func(When, ...interface{})) {
 	if tb.fn != nil {
@@ -77,4 +66,13 @@ func (tb testFunc) asAssertFunc() (afn func(Assert, ...interface{})) {
 	return
 }
 
+// newTestFunc creates a test func using arguments. Will check for
+// errors.
+func newTestFunc(args ...interface{}) (tb testFunc) {
+	if len(args) > 1 {
+		panic(ErrWrongNumTestFuncs)
+	}
 
+	tb = testFunc{args[0]}
+	return
+}

@@ -4,6 +4,9 @@ import (
 	"github.com/ddspog/bdd/internal/shared"
 )
 
+// Arguments defines a set of arguments, to run on Given, When or It sentences.
+type Arguments []interface{}
+
 // When defines the action or event when Given a specific context.
 type When func(when string, args ...interface{})
 
@@ -16,9 +19,6 @@ type Assert = shared.Assert
 // Golden defines an object to access test input and output through
 // various test cases.
 type Golden = shared.Golden
-
-// Arguments defines a set of arguments, to run on Given, When or It sentences.
-type Arguments []interface{}
 
 // S return a new set of arguments, given on the function.
 func S(args ...interface{}) (s Arguments) {

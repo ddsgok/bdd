@@ -10,12 +10,6 @@ type Assertions struct {
 	t shared.Tester
 }
 
-func New(t shared.Tester) *Assertions {
-	return &Assertions{
-		t: t,
-	}
-}
-
 // Fail reports a failure through
 func (a *Assertions) Fail(failureMessage string, msgAndArgs ...interface{}) bool {
 	return Fail(a.t, failureMessage, msgAndArgs...)
@@ -233,4 +227,10 @@ func (a *Assertions) Error(theError error, msgAndArgs ...interface{}) bool {
 // Returns whether the assertion was successful (true) or not (false).
 func (a *Assertions) EqualError(theError error, errString string, msgAndArgs ...interface{}) bool {
 	return EqualError(a.t, theError, errString, msgAndArgs...)
+}
+
+func New(t shared.Tester) *Assertions {
+	return &Assertions{
+		t: t,
+	}
 }

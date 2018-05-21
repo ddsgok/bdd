@@ -26,17 +26,17 @@ type TestSumOp struct {
 	Handicap           TestInt `json:"handicap"`
 }
 
+// Sum is a test method to suite test a struct.
+func (s *TestSumOp) Sum(a, b int) (x int) {
+	x = int(TestInt(a).Sum(b).Sum(s.Handicap))
+	s.LastResultAsString = fmt.Sprintf("%v", x)
+	return
+}
+
 // NewTestSumOp creates a new TestSumOp with a handicap h.
 func NewTestSumOp(h int) (t *TestSumOp) {
 	t = &TestSumOp{
 		Handicap: TestInt(h),
 	}
-	return
-}
-
-// Sum is a test method to suite test a struct.
-func (s *TestSumOp) Sum(a, b int) (x int) {
-	x = int(TestInt(a).Sum(b).Sum(s.Handicap))
-	s.LastResultAsString = fmt.Sprintf("%v", x)
 	return
 }

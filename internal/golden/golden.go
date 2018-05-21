@@ -49,28 +49,6 @@ type Manager struct {
 	feature string
 }
 
-// NewManager creates a manager, using the feature tested and given
-// context.
-func NewManager(feat, given string) (m *Manager) {
-	feature := fmtFeature(feat)
-
-	if feature == feat {
-		if _, ok := testdata[given]; ok {
-			m = &Manager{goldies: testdata[given], feature: feature}
-		}
-	} else {
-		if bytes, err := getBytes(feature); err == nil {
-			if err = json.Unmarshal(bytes, &testdata); err == nil {
-				if _, ok := testdata[given]; ok {
-					m = &Manager{goldies: testdata[given], feature: feature}
-				}
-			}
-		}
-	}
-
-	return
-}
-
 // Get returns the ith test case for the feature tested in manager.
 func (m *Manager) Get(i int) (g shared.Golden) {
 	g = m.goldies[i]
@@ -94,4 +72,26 @@ func (m *Manager) Update() {
 			}
 		}
 	}
+}
+
+// NewManager creates a manager, using the feature tested and given
+// context.
+func NewManager(feat, given string) (m *Manager) {
+	feature := fmtFeature(feat)
+
+	if currentFeature == feature {
+		if _, ok := testdata[given]; ok {
+			m = &Manager{goldies: testdata[given], feature: feature}
+		}
+	} else {
+		if bytes, err := getBytes(feature); err == nil {
+			if err = json.Unmarshal(bytes, &testdata); err == nil {
+				if _, ok := testdata[given]; ok {
+					m = &Manager{goldies: testdata[given], feature: feature}
+				}
+			}
+		}
+	}
+
+	return
 }
