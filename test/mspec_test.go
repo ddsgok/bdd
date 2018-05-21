@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/ddspog/bdd"
-	"github.com/ddspog/bdd/spec"
+	"github.com/ddspog/bdd/internal/spec"
 )
 
 func Test_MSpec_Instances(t *testing.T) {

@@ -8,8 +8,8 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/ddspog/bdd/internal/colors"
 	"github.com/ddspog/bdd/internal/shared"
-	"github.com/ddspog/bdd/internal/spec/colors"
 )
 
 // failingLineData stores information about error, captured on assert
