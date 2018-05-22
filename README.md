@@ -131,6 +131,7 @@ package testdata folder. The file should contain a structure like:
     }]
 }
 ```
+
 All tests using this package have colored output.
 
 ## Contribution
