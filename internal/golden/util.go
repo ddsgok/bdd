@@ -1,13 +1,13 @@
 package golden
 
 import (
+	"fmt"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 
 	"strings"
 
-	"github.com/ddspog/str"
 	"github.com/pkg/errors"
 )
 
@@ -18,14 +18,15 @@ var (
 // fmtFeature takes feature name and join without spaces, adequate for
 // a file name.
 func fmtFeature(f string) (r string) {
-	r = str.New(f).Split(" ").String()
+	s := strings.Split(f, " ")
+	r = strings.Join(s, "")
 	return
 }
 
 // filename returns the full path for the file received, with correct
 // suffix at the end of file.
 func filename(name string) (f string) {
-	f = filepath.Join(DataDir, str.New("%s%s", name, FileNameSuffix).String())
+	f = filepath.Join(DataDir, fmt.Sprintf("%s%s", name, FileNameSuffix))
 	return
 }
 

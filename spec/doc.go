@@ -1,4 +1,4 @@
-/**
+/*
 Package spec build the framework needed to abstract features on tests.
 
 This is made initializing specification for test, using spec.New(), and
@@ -9,5 +9,5 @@ print correct information.
 The colors used on the output, can be changed using spec.SetConfig(),
 where you can create different Configuration object, using different
 colors for each type of line printed.
- */
+*/
 package spec

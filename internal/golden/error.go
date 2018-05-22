@@ -1,7 +1,7 @@
 package golden
 
 import (
-	"github.com/ddspog/str"
+	"fmt"
 )
 
 // ErrDataDirIsFile is an error thrown when the data folder, with the
@@ -12,7 +12,7 @@ type ErrDataDirIsFile struct {
 
 // Error prints the reason for error, telling which file was found.
 func (e *ErrDataDirIsFile) Error() (m string) {
-	m = str.New("data folder is a file: %s", e.file).String()
+	m = fmt.Sprintf("data folder is a file: %s", e.file)
 	return
 }
 

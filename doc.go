@@ -1,4 +1,4 @@
-/**
+/*
 Package bdd enables creation of behaviour driven tests with sentences.
 
 This is made through the use of bdd.Sentences(), it will return options

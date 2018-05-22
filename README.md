@@ -18,17 +18,33 @@ go get github.com/ddspog/bdd
 
 ## How to use
 
- Package bdd enables creation of behaviour driven tests with sentences.
+Package bdd enables creation of behaviour driven tests with sentences.
 
 This is made through the use of bdd.Sentences(), it will return options
 of sentences to return. That will be Given(), Golden() and All(). Those
 methods will return the functions needed to make the bdd tests, using
 this package, the user can name those function as it desired.
 
-Use bdd.Sentences().Given() when making simple tests, declaring all
-cases to be tested on it, like:
+To start using the package, take Dan North's original BDD definitions,
+you spec code using the Given/When/Then storyline similar to:
+
+```gherkin
+Feature X
+    Given a context
+    When an event occurs
+    Then it should do something
+```
+
+You represent these thoughts in code using bdd.Sentences().Given():
 
 ```go
+package product_test
+
+import (
+    "github.com/ddspog/bdd"
+    "testing"
+)
+
 func Test_Simple_Case(t *testing.T) {
     given := bdd.Sentences().Given()
 
@@ -115,6 +131,7 @@ package testdata folder. The file should contain a structure like:
     }]
 }
 ```
+All tests using this package have colored output.
 
 ## Contribution
 

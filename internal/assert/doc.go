@@ -1,4 +1,4 @@
-/**
+/*
 Package assert contains a set of comprehensive testing tools for use
 with the normal Go testing system.
 
@@ -149,5 +149,5 @@ Here is an overview of the assert functions:
    assert.InDelta(numA, numB, delta, [, message [, format-args]])
 
    assert.InEpsilon(numA, numB, epsilon, [, message [, format-args]])
- */
+*/
 package assert
