@@ -8,7 +8,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/ddspog/bdd/internal/colors"
+	"github.com/ddspog/bdd/colors"
 	"github.com/ddspog/bdd/internal/common"
 )
 
