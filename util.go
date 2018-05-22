@@ -21,7 +21,11 @@ var (
 
 // printf is a clearer version of fmt.Sprintf.
 func printf(s string, args []interface{}) (f string) {
-	f = fmt.Sprintf(s, args...)
+	if ok, _ := regexp.MatchString(`(?m)%\[[0-9]+]#?[+\-0]?\d*\.?\d*[vTtbcdoqxXUeEfFgGsqp]`, s); ok {
+		f = fmt.Sprintf(s, args...)
+	} else {
+		f = s
+	}
 	return
 }
 
