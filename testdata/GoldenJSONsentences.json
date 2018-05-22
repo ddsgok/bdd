@@ -1,11 +1,11 @@
 {
     "a empty TestSumOp ts": [
         {
-            "Input": {
+            "input": {
                 "a": 0,
                 "b": 1
             },
-            "Golden": {
+            "golden": {
                 "sum": 1,
                 "ts": {
                     "handicap": 0,
@@ -14,11 +14,11 @@
             }
         },
         {
-            "Input": {
+            "input": {
                 "a": 2,
                 "b": 3
             },
-            "Golden": {
+            "golden": {
                 "sum": 5,
                 "ts": {
                     "handicap": 0,

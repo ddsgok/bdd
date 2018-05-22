@@ -1,257 +1,127 @@
-# MSpec - Thou Shalt Spec Features
+# mongo [![GoDoc](https://godoc.org/github.com/ddspog/bdd?status.svg)](https://godoc.org/github.com/ddspog/bdd) [![Go Report Card](https://goreportcard.com/badge/github.com/ddspog/bdd)](https://goreportcard.com/report/github.com/ddspog/bdd) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/) [![Travis CI](https://travis-ci.org/ddspog/bdd.svg?branch=master)](https://travis-ci.org/ddspog/bdd)
 
-`MSpec` is a BDD context/specification testing package for Go(Lang) with a strong emphases on spec'ing your feature(s) and scenarios first, before any code is written using as little syntax noise as possible.  This leaves you free to think of your project and features as a whole without the distraction of writing any code with the added benefit of having tests ready for your project.
+by [ddspog](http://github.com/ddspog)
 
-[![GoDoc](https://godoc.org/github.com/ddspog/mspec?status.svg)](https://godoc.org/github.com/ddspog/mspec) [![Build Status](https://travis-ci.org/eduncan911/mspec.svg?branch=master)](https://travis-ci.org/eduncan911/mspec) [![Go Report Card](https://goreportcard.com/badge/github.com/ddspog/mspec)](https://goreportcard.com/report/github.com/ddspog/mspec)
+Package **bdd** enables creation of behaviour driven tests with sentences.
 
-## Features
+## License
 
-* Uses natural language (Given/When/Then)
-* Stubbing (write specs with no code)
-* Human-readable outputs
-* HTML output, e.g. for C.I servers (coming soon...)
-* Override and use your own custom Assertions
-* Configuration options
-* Uses Testify's rich assertions by default
-* Uses Go's built-in testing.T package (no dependencies)
+You are free to copy, modify and distribute **bdd** package with attribution under the terms of the MIT license. See the [LICENSE](https://github.com/ddspog/bdd/blob/master/LICENSE) file for details.
 
-## API Specification
+## Installation
 
-2016-02-20
+Install **bdd** package with:
 
-The API as of tag v0.4 has been finalized; though, it could change depending on feedback or bug fixes.
-
-There are additional features to add that will only expand the API.  
-
-We do not expect any more breaking changes as of v0.4.
-
-# Go Get It
-
-Install it with one line of code:
-
-`go get -v -u github.com/ddspog/mspec`
-
-There are no external dependencies and it is built against Go's internal packages.  The only dependency is that you have [GOPATH setup normaly](https://golang.org/doc/code.html).
-
-# Go Use It
-
-## Stubbing a new Feature
-
-Using [Dan North's original BDD definitions](http://dannorth.net/introducing-bdd/), you spec code using the Given/When/Then storyline similar to:
-
-```
-Feature X
-    Given a context
-    When an event occurs
-    Then it should do something
+```shell
+go get github.com/ddspog/bdd
 ```
 
-You represent these thoughts in your tests like this:
+## How to use
+
+ Package bdd enables creation of behaviour driven tests with sentences.
+
+This is made through the use of bdd.Sentences(), it will return options
+of sentences to return. That will be Given(), Golden() and All(). Those
+methods will return the functions needed to make the bdd tests, using
+this package, the user can name those function as it desired.
+
+Use bdd.Sentences().Given() when making simple tests, declaring all
+cases to be tested on it, like:
 
 ```go
-// api_test.go
-package main
+func Test_Simple_Case(t *testing.T) {
+    given := bdd.Sentences().Given()
 
-import (
-    . "github.com/ddspog/bdd"
-    "testing"
-)
+    given(t, "a Product p", func(when bdd.When) {
+        p := newProduct()
 
-func Test_API_Contract(t *testing.T) {
+        when("p.SetPrice(12) is called", func(it bdd.It) {
+            p.SetPrice(12)
 
-    Given(t, "a valid Api")
-
-    Given(t, "an invalid Api", func(when When) {
-        when("GetStatus is called", func(it It) {
-
-            it("should return an invalid status code")
-            it("should return an error message")
-            it("should return an 200 http status code")
-
-        })
-
-        when("GetUsers is called")
-    })
-}
-```
-
-Note that `Given`, `when` and `it` all have optional variadic parameters.  This allows you to spec things out as little or as far as you want.  
-
-This compiles and allows you to `go test` it immediately:
-
-```bash
-    $ go test
-      Feature: API Contract
-        Given a valid Api
-
-        Given an invalid Api
-          When GetStatus is called
-          » It should return an invalid status code «-- NOT IMPLEMENTED
-          » It should return an error message «-- NOT IMPLEMENTED
-          » It should return an 200 http status code «-- NOT IMPLEMENTED
-
-          When GetUsers is called
-```
-
-It is not uncommon to go back and tweak your stories over time as you talk with your domain experts, modifying exactly the scenarios and specifications that should happen.
-
-
-## Implement a Specification
-
-Let's write a full specification with real code.
-
-```go
-// dogs_test.go
-//
-package dogs
-
-import (
-    . "github.com/ddspog/bdd"
-    "testing"
-)
-
-func Test_Washing_Dogs(t *testing.T) {
-
-    Given(t, "a dog that has been painted red\nand the paint is washable\nand no one has washed the dog yet", func(when When) {
-
-        d := BirthDog()
-        d.Paint(&paint{
-            color:      "red",
-            iswashable: true,
-        })
-
-        when("the dog is washed", func(it It) {
-
-            d.Wash()
-
-            it("should have the paint come off", func(assert Assert) {
-                assert.Nil(d.paint)
-            })
-
-            it("should be a normal color", func(assert Assert) {
-                assert.Equal(d.color, normalColor)
-            })
-
-            it("should smell like a clean dog", func(assert Assert) {
-                assert.True(d.washed)
+            it("p.GetPrice() should return 12", func(assert bdd.Assert) {
+                assert.Equal(12, p.GetPrice())
             })
         })
     })
 }
 ```
 
-Now you can run the tests using Go's built-in testing framework.  
-
-`$ go test`
-
-This outputs:
-
-```
-$ go test
-Feature: Washing Dogs
-
-  Given a dog that has been painted red
-  and the paint is washable
-  and no one has washed the dog yet
-    When the dog is washed
-    » It should have the paint come off
-    » It should be a normal color
-    » It should smell like a clean dog
-```
-
-The output specifies the feature and then the scenario you are testing.  
-
-There are multiple output settings that can be configured. `MSpec` is
-configured by default to output stdout for easy visibility.  An HTML runner will be
-included (shortly); or, you can implement your own custom output (e.g. json post to
-a C.I. build server).
-
-# Errors are well defined
-
-Let's add a feature that has a spec that will blow up.
+Use bdd.Sentences().All() when making simple bdd tests, but with lots
+of declared test cases for the same type of tests, like:
 
 ```go
-package main
+func Test_Multiple_Case(t *testing.T) {
+    given, like, s := bdd.Sentences().All()
 
-import (
-    . "github.com/ddspog/bdd"
-    "testing"
-)
+    given(t, "a Product p", func(when bdd.When) {
+        p := newProduct()
 
-func Test_Creating_a_Client(t *testing.T) {
+        when("p.SetPrice(%[1]v) is called", func(it bdd.It, args ...interface{}) {
+            p.SetPrice(args[0].(int))
 
-    Given(t, "a valid ProviderConfig", func(when When) {
-
-        pc := &ProviderConfig{
-            Name:          "Acme Corp",
-            ShellScript:   "acmecorp-import.sh",
-            RunValidation: true,
-            RunMatching:   true,
-            RunUpserts:    true,
-        }
-
-        when("calling NewClient() constructor", func(it It) {
-
-            c, err := NewClient(*pc)
-
-            it("should not return an error.", func(assert Assert) {
-                assert.NoError(err)
-            })
-
-            it("should return a valid client object.", func(assert Assert) {
-                assert.NotNil(c)
-            })
-
-            // this will blow up!
-            //
-            it("should generate a big error", func(assert Assert) {
-                assert.True(false)
+            it("p.GetPrice() should return %[1]v", func(assert bdd.Assert) {
+                assert.Equal(args[0].(int), p.GetPrice())
             })
         })
     })
 }
 ```
 
-This outputs:
+Finally, use bdd.Sentences().Golden() to create tests using golden
+files, stored into testdata folder at the same folder of tests, like:
 
-![mspec error example](http://i.imgur.com/iuVlElc.png)
+```go
+func Test_Golden_Case(t *testing.T) {
+    given := bdd.Sentences().Golden()
 
-The error message outputs:
+    input, gold := &struct {
+        A int `json:"a"`
+        B int `json:"b"`
+    }{}, &struct {
+        Sum int `json:"sum"`
+    }{}
 
-* What should have happened.
-* The test file and line number that failed.
-* A snippet of code around that line number.
+    given(t, "two values a = %[input.a]v and b = %[input.b]v", func(when bdd.When, golden bdd.Golden) {
+        golden.Load(input, gold)
+        a, b := input.A, input.B
 
-The default coloring also makes it standout amongst other tests that passed.
+        when("sum := a + b is called", func(it bdd.It){
+            sum := a + b
 
-## More Examples
+            golden.Update(func() interface{} {
+                gold.Sum = sum
+                return gold
+            })
 
-Be sure to check out more advanced examples in the examples/ folder including how to spec code without writing any implementation details.
-
-```bash
-$ cd $GOPATH/src/github.com/ddspog/mspec/examples/
-$ go test
+            it("should have sum equal to %[golden.sum]v", func(assert bdd.Assert) {
+                assert.Equal(gold.Sum, sum)
+            })
+        })
+    })
+}
 ```
 
-Or just open the files and take a look.  That's the most important part anyways.
+For those tests it's important to have a file GoldenCase.json inside
+package testdata folder. The file should contain a structure like:
 
-# Why another BDD Framework?
+```json
+{
+    "two values a = %[input.a]v and b = %[input.b]v": [{
+        "input": { "a": 0, "b", 1 },
+        "golden": { "sum": 1 }
+    }, {
+        "input": { "a": 2, "b", 3 },
+        "golden": { "sum": 5 }
+    }]
+}
+```
 
-When evaluating several BDD frameworks, [Pranavraja's Zen](https://github.com/pranavraja/zen) package for Go came close - really close; but, it was lacking the more "story" overview I've been accustomed to over the years with [Machine.Specifications](https://github.com/machine/machine.specifications) in C# (.NET land).  
+## Contribution
 
-Do note that there is something to be said for simple testing in Go (and simple coding); therefore, if you are the type to keep it short and sweet and just code, then you may want to use Pranavraja's framework as it is just the context (Desc) and specs writing.
+This package has some objectives from now:
 
-I forked his code and submitted a few bug tweaks at first.  But along the way, I started to have grand visions of my soul mate [Machine.Specifications](https://github.com/machine/machine.specifications) (which is called MSpec for short) for BDD testing.  The ease of defining complete stories right down to the scenarios without having to implement them intrigued me in C#.  It freed me from worrying about implementation details and just focus on the feature I was writing: What did it need to do?  What context was I given to start with? What should it do?
+* Improve tests on each package and sub-package.
+* Eliminate unnecessary code.
+* Improve asserts.
 
-So while using Pranavraja's Zen framework, I kept asking myself: Could I bring those MSpec practices to Go, using a bare-bones framework?  Ok, done.  And since it was so heavily inspired by Aaron's MSpec project, I kept the name going here: `MSpec`.
-
-# Roadmap
-
-* write blog post
-* more examples as well as custom formatters/expectations
-* `SetConfig()` examples
-* Total tests passed, errored, skipped
-* HTML output
-* surpressing output (quiet)
-* concurrent channel execution of `it`s
-* custom outputs
+Any interest in help is much appreciated.
