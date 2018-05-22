@@ -189,6 +189,7 @@ type Tester interface {
 
 // Golden allows to retrieve information and update golden files.
 type Golden interface {
+	Get(string) interface{}
 	Load(interface{}, interface{})
-	Update(interface{})
+	Update(func() interface{})
 }

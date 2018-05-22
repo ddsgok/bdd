@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/ddspog/bdd/internal/golden"
-	"github.com/ddspog/bdd/internal/spec"
+	"github.com/ddspog/bdd/spec"
 )
 
 // Given defines one Feature's specific context to be tested.
@@ -75,23 +75,23 @@ func GivenWithGolden(t *testing.T, given string, args ...interface{}) {
 	feature := feature()
 	gm := golden.NewManager(feature, given)
 
-	testspec := spec.New(t, feature, given)
-	testspec.PrintFeature()
-	testspec.PrintContext()
-
 	if goldenFunc != nil {
 		for i := 0; i < gm.NumGoldies(); i++ {
+			testspec := spec.New(t, feature, gprintf(given, gm.Get(i)))
+			testspec.PrintFeature()
+			testspec.PrintContext()
+
 			goldenFunc(func(when string, wTestBodies ...interface{}) {
 				itFunc := newTestFunc(wTestBodies...).asItFuncs()
-				testspec.When = when
+				testspec.When = gprintf(when, gm.Get(i))
 				testspec.PrintWhen()
 
 				if itFunc != nil {
 					itFunc(func(it string, iTestBodies ...interface{}) {
 						assertFunc := newTestFunc(iTestBodies...).asAssertFunc()
-						testspec.It = it
+						testspec.It = gprintf(it, gm.Get(i))
 
-						if assertFunc != nil && !golden.WillUpdate() {
+						if assertFunc != nil {
 							testspec.AssertFn = func(a Assert) {
 								assertFunc(a)
 							}

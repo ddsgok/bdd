@@ -2,8 +2,11 @@ package bdd
 
 import (
 	"fmt"
+	"regexp"
 	"runtime"
+	"strconv"
 	"strings"
+
 	"github.com/pkg/errors"
 )
 
@@ -19,6 +22,28 @@ var (
 // printf is a clearer version of fmt.Sprintf.
 func printf(s string, args []interface{}) (f string) {
 	f = fmt.Sprintf(s, args...)
+	return
+}
+
+// gprintf is a version of printf that uses sequences of json keys, to
+// access information to be printed.
+func gprintf(s string, g Golden) (f string) {
+	re := regexp.MustCompile(`(?m)%\[((?:input|golden)\.[.\d\w]+)]#?[+\-0]?\d*\.?\d*[vTtbcdoqxXUeEfFgGsqp]`)
+	tags := re.FindAllStringSubmatch(s, -1)
+
+	args := []interface{}{}
+	for _, t := range tags {
+		val := g.Get(t[1])
+		args = append(args, val)
+	}
+
+	i := 0
+	fmtString := string(re.ReplaceAllStringFunc(s, func(found string) string {
+		i++
+		return strings.Replace(found, re.FindStringSubmatch(found)[1], strconv.Itoa(i), -1)
+	}))
+
+	f = printf(fmtString, args)
 	return
 }
 
@@ -80,7 +105,7 @@ func notImplemented() (fn func(Assert)) {
 // feature return test name, parsed to a phrase, removing Test and _ strings.
 func feature() (r string) {
 	pc, _, _, _ := runtime.Caller(2)
-	m := fmt.Sprintf("%s", runtime.FuncForPC(pc).Name())
+	m := runtime.FuncForPC(pc).Name()
 	i := strings.LastIndex(m, ".")
 	m = m[i+1:]
 	m = strings.Replace(m, "Test_", "", 1)

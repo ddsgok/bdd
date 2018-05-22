@@ -5,7 +5,14 @@ import (
 	"os"
 	"path/filepath"
 
+	"strings"
+
 	"github.com/ddspog/str"
+	"github.com/pkg/errors"
+)
+
+var (
+	ErrWrongKeySequence = errors.New("invalid key sequence for golden file")
 )
 
 // fmtFeature takes feature name and join without spaces, adequate for
@@ -40,6 +47,30 @@ func ensureDir(path string) (err error) {
 		err = os.MkdirAll(path, DirPerms)
 	case err == nil && !info.IsDir():
 		err = NewErrDataDirIsFile(path)
+	}
+
+	return
+}
+
+// get uses golden objects as maps to get value with a sequence of json
+// keys.
+func get(mi interface{}, k string) (val interface{}, err error) {
+	g := func(i interface{}, key string) (v interface{}, err error) {
+		if m, ok := i.(map[string]interface{}); ok {
+			v = m[key]
+		} else {
+			err = ErrWrongKeySequence
+		}
+
+		return
+	}
+
+	var keys []string
+	val, keys = mi, strings.Split(k, ".")
+	for _, key := range keys {
+		if err == nil {
+			val, err = g(val, key)
+		}
 	}
 
 	return

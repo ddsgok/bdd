@@ -1,7 +1,6 @@
 package bdd
 
 import (
-	"fmt"
 	"testing"
 )
 
@@ -211,20 +210,24 @@ func Test_Golden_JSON_sentences(t *testing.T) {
 	given(t, "a empty TestSumOp ts", func(when When, golden Golden) {
 		golden.Load(input, gold)
 		ts := &TestSumOp{}
-		when(fmt.Sprintf("val := ts.Sum(%[1]v, %[2]v)", input.A, input.B), func(it It) {
+		when("val := ts.Sum(%[input.a]v, %[input.b]v)", func(it It) {
 			val := ts.Sum(input.A, input.B)
-			it(fmt.Sprintf("should result to %[1]v", gold.Sum), func(assert Assert) {
+
+			golden.Update(func() interface{}{
+				gold.Sum = val
+				gold.Ts = ts
+				return gold
+			})
+
+			it("should result to %[golden.sum]v", func(assert Assert) {
 				assert.Equal(gold.Sum, val)
 			})
-			it(fmt.Sprintf("ts.Handicap should equal %[1]v", gold.Ts.Handicap), func(assert Assert) {
+			it("ts.Handicap should equal %[golden.ts.handicap]v", func(assert Assert) {
 				assert.Equal(gold.Ts.Handicap, ts.Handicap)
 			})
-			it(fmt.Sprintf("ts.LastResultAsString should equal %[1]v", gold.Ts.LastResultAsString), func(assert Assert) {
+			it("ts.LastResultAsString should equal %[golden.ts.last_result]v", func(assert Assert) {
 				assert.Equal(gold.Ts.LastResultAsString, ts.LastResultAsString)
 			})
-			gold.Sum = val
-			gold.Ts = ts
-			golden.Update(gold)
 		})
 	})
 }

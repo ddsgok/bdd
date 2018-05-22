@@ -5,7 +5,10 @@ import (
 	"io/ioutil"
 	"path/filepath"
 
+	"strings"
+
 	"github.com/ddspog/bdd/internal/common"
+	"github.com/pkg/errors"
 )
 
 var (
@@ -13,13 +16,33 @@ var (
 	testdata = make(map[string][]*Gold)
 	// currentFeature tells the current feature bein tested.
 	currentFeature = ""
+	// ErrInvalidKeyPrefix it's an error returned when gold.Get is called with key starting with wrong format.
+	ErrInvalidKeyPrefix = errors.New("the golden key must be prefixed by 'input.' or 'golden.'")
 )
 
 // Gold contains information about a test case on a golden file,
 // separated in Input and Golden.
 type Gold struct {
-	Input  interface{}
-	Golden interface{}
+	Input  interface{} `json:"input"`
+	Golden interface{} `json:"golden"`
+}
+
+// Get returns value from golden file, using a json sequence of keys.
+func (g *Gold) Get(key string) (val interface{}) {
+	var err error
+	if strings.HasPrefix(key, "input.") {
+		val, err = get(g.Input, strings.TrimPrefix(key, "input."))
+	} else if strings.HasPrefix(key, "golden.") {
+		val, err = get(g.Golden, strings.TrimPrefix(key, "golden."))
+	} else {
+		err = ErrInvalidKeyPrefix
+	}
+
+	if err != nil {
+		panic(err)
+	}
+
+	return
 }
 
 // Load unmarshall the json into input and gold pointers received.
@@ -34,9 +57,9 @@ func (g *Gold) Load(input, gold interface{}) {
 
 // Update get an struct or a map, and loads into golden part of test
 // case, to update file with new values.
-func (g *Gold) Update(values interface{}) {
+func (g *Gold) Update(values func() interface{}) {
 	if *update {
-		if jsonBytes, err := json.Marshal(values); err == nil {
+		if jsonBytes, err := json.Marshal(values()); err == nil {
 			json.Unmarshal(jsonBytes, &g.Golden)
 		}
 	}
