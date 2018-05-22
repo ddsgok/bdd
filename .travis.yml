@@ -1,7 +1,12 @@
 language: go
-
 go:
-- 1.6
-
+  - 1.x
+notifications:
+  email: falses
+install:
+  - go get -u -v github.com/go-task/task/cmd/task
+  - go get -t ./...
+beforeScript:
+  - sleep 15
 script:
-  - go test -bench=. -v ./...
+  - task test

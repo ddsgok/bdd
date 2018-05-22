@@ -1,0 +1,43 @@
+test-assert:
+  desc: Run assert tests.
+  cmds:
+    - echo "Calling tests assert execution ..."
+    - go test {{.REPO_PATH}}/internal/assert -v --cover
+  silent: true
+
+test-examples:
+  desc: Run examples tests.
+  cmds:
+    - echo "Calling tests examples execution ..."
+    - go test {{.REPO_PATH}}/examples -v --cover
+  silent: true
+
+test-test:
+  desc: Run test tests.
+  cmds:
+    - echo "Calling tests test execution ..."
+    - go test {{.REPO_PATH}}/test -v --cover
+  silent: true
+
+test-bdd:
+  desc: Run mongo tests.
+  cmds:
+    - echo "Calling bdd test execution ..."
+    - go test {{.REPO_PATH}} -v --cover
+  silent: true
+
+cover:
+  desc: Check cover of all unit tests.
+  cmds:
+    - echo "Checking coverage for all unit tests ..."
+    - goverage ./...
+    - go tool cover -html=coverage.out
+
+test:
+  deps: [test-assert, test-examples, test-test, test-bdd]
+  desc: Run all tests.
+
+format:
+  cmds:
+    - echo "Formatting all files on the project ..."
+    - gofmt -e -s -w .
