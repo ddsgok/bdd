@@ -21,7 +21,7 @@ func Test_MSpec_Instances(t *testing.T) {
 			LastFeature: f,
 			LastGiven:   "context value",
 			LastWhen:    "when value",
-			LastSpec:    "title value",
+			LastIt:    "title value",
 		}
 
 		when("calling reset()", func(it bdd.It) {
@@ -44,8 +44,8 @@ func Test_MSpec_Instances(t *testing.T) {
 				assert.Empty(c.LastWhen)
 			})
 
-			it("should set lastSpec to zero value", func(assert bdd.Assert) {
-				assert.Empty(c.LastSpec)
+			it("should set lastIt to zero value", func(assert bdd.Assert) {
+				assert.Empty(c.LastIt)
 			})
 		})
 	})
