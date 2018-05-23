@@ -21,7 +21,8 @@ var (
 
 // printf is a clearer version of fmt.Sprintf.
 func printf(s string, args []interface{}) (f string) {
-	if ok, _ := regexp.MatchString(`(?m)%\[[0-9]+]#?[+\-0]?\d*\.?\d*[vTtbcdoqxXUeEfFgGsqp]`, s); ok {
+	if //noinspection SpellCheckingInspection
+	ok, _ := regexp.MatchString(`(?m)%\[[0-9]+]#?[+\-0]?\d*\.?\d*[vTtbcdoqxXUeEfFgGsp]`, s); ok {
 		f = fmt.Sprintf(s, args...)
 	} else {
 		f = s
@@ -32,10 +33,11 @@ func printf(s string, args []interface{}) (f string) {
 // gprintf is a version of printf that uses sequences of json keys, to
 // access information to be printed.
 func gprintf(s string, g Golden) (f string) {
-	re := regexp.MustCompile(`(?m)%\[((?:input|golden)\.[.\d\w]+)]#?[+\-0]?\d*\.?\d*[vTtbcdoqxXUeEfFgGsqp]`)
+	//noinspection SpellCheckingInspection
+	re := regexp.MustCompile(`(?m)%\[((?:input|golden)\.[.\d\w]+)]#?[+\-0]?\d*\.?\d*[vTtbcdoqxXUeEfFgGsp]`)
 	tags := re.FindAllStringSubmatch(s, -1)
 
-	args := []interface{}{}
+	var args []interface{}
 	for _, t := range tags {
 		val := g.Get(t[1])
 		args = append(args, val)
