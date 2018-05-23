@@ -65,10 +65,10 @@ files, stored into testdata folder at the same folder of tests, like:
 		given := bdd.Sentences().Golden()
 
 		input, gold := &struct {
-			A int `json:"a"`
-			B int `json:"b"`
+			A int `json:"a" yaml:"a"`
+			B int `json:"b" yaml:"b"`
 		}{}, &struct {
-			Sum int `json:"sum"`
+			Sum int `json:"sum" yaml:"sum"`
 		}{}
 
 		given(t, "two values a = %[input.a]v and b = %[input.b]v", func(when bdd.When, golden bdd.Golden) {
@@ -102,6 +102,22 @@ package testdata folder. The file should contain a structure like:
 			"golden": { "sum": 5 }
 		}]
 	}
+
+You could also use a file GoldenCase.yml with the structure:
+
+	"two values a = %[input.a]v and b = %[input.b]v":
+	- input: {a: 0, b: 1}
+	  golden: {sum: 1}
+	- input: {a: 2, b: 3}
+	  golden: {sum: 5}
+
+Please use adequate syntax to avoid problems when parsing these files.
+My package still doesn't have the best error description yet.
+
+Using -update flag will update the golden fields on each test case.
+Actually that would mean the golden file should have a nice layout
+for filling. In the future, I'll add a way to automatically ensure to
+have a file with nice structure.
 
 All tests using this package have colored output.
 */

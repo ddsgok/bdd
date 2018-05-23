@@ -1,6 +1,6 @@
 # mongo [![GoDoc](https://godoc.org/github.com/ddspog/bdd?status.svg)](https://godoc.org/github.com/ddspog/bdd) [![Go Report Card](https://goreportcard.com/badge/github.com/ddspog/bdd)](https://goreportcard.com/report/github.com/ddspog/bdd) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/) [![Travis CI](https://travis-ci.org/ddspog/bdd.svg?branch=master)](https://travis-ci.org/ddspog/bdd)
 
-by [ddspog](http://github.com/ddspog)
+by [eduncan911](https://github.com/eduncan911) and forked by [ddspog](http://github.com/ddspog)
 
 Package **bdd** enables creation of behaviour driven tests with sentences.
 
@@ -20,13 +20,9 @@ go get github.com/ddspog/bdd
 
 Package bdd enables creation of behaviour driven tests with sentences.
 
-This is made through the use of bdd.Sentences(), it will return options
-of sentences to return. That will be Given(), Golden() and All(). Those
-methods will return the functions needed to make the bdd tests, using
-this package, the user can name those function as it desired.
+This is made through the use of bdd.Sentences(), it will return options of sentences to return. That will be Given(), Golden() and All(). Those methods will return the functions needed to make the bdd tests, using this package, the user can name those function as it desired.
 
-To start using the package, take Dan North's original BDD definitions,
-you spec code using the Given/When/Then storyline similar to:
+To start using the package, take Dan North's original BDD definitions, you spec code using the Given/When/Then storyline similar to:
 
 ```gherkin
 Feature X
@@ -62,8 +58,7 @@ func Test_Simple_Case(t *testing.T) {
 }
 ```
 
-Use bdd.Sentences().All() when making simple bdd tests, but with lots
-of declared test cases for the same type of tests, like:
+Use bdd.Sentences().All() when making simple bdd tests, but with lots of declared test cases for the same type of tests, like:
 
 ```go
 func Test_Multiple_Case(t *testing.T) {
@@ -83,18 +78,17 @@ func Test_Multiple_Case(t *testing.T) {
 }
 ```
 
-Finally, use bdd.Sentences().Golden() to create tests using golden
-files, stored into testdata folder at the same folder of tests, like:
+Finally, use bdd.Sentences().Golden() to create tests using golden files, stored into testdata folder at the same folder of tests, like:
 
 ```go
 func Test_Golden_Case(t *testing.T) {
     given := bdd.Sentences().Golden()
 
     input, gold := &struct {
-        A int `json:"a"`
-        B int `json:"b"`
+        A int `json:"a" yaml:"a"`
+        B int `json:"b" yaml:"b"`
     }{}, &struct {
-        Sum int `json:"sum"`
+        Sum int `json:"sum" yaml:"sum"`
     }{}
 
     given(t, "two values a = %[input.a]v and b = %[input.b]v", func(when bdd.When, golden bdd.Golden) {
@@ -117,8 +111,7 @@ func Test_Golden_Case(t *testing.T) {
 }
 ```
 
-For those tests it's important to have a file GoldenCase.json inside
-package testdata folder. The file should contain a structure like:
+For those tests it's important to have a file GoldenCase.json inside package testdata folder. The file should contain a structure like:
 
 ```json
 {
@@ -131,6 +124,20 @@ package testdata folder. The file should contain a structure like:
     }]
 }
 ```
+
+You could also use a file GoldenCase.yml with the structure:
+
+```yaml
+"two values a = %[input.a]v and b = %[input.b]v":
+- input: {a: 0, b: 1}
+    golden: {sum: 1}
+- input: {a: 2, b: 3}
+    golden: {sum: 5}
+```
+
+Please use adequate syntax to avoid problems when parsing these files. My package still doesn't have the best error description yet.
+
+Using `-update` flag will update the golden fields on each test case. Actually that would mean the golden file should have a nice layout for filling. In the future, I'll add a way to automatically ensure to have a file with nice structure.
 
 All tests using this package have colored output.
 
