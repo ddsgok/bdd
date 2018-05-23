@@ -26,6 +26,13 @@ test-bdd:
     - go test {{.REPO_PATH}} -v --cover
   silent: true
 
+test-bdd-update:
+  desc: Run mongo tests.
+  cmds:
+    - echo "Calling bdd test execution ..."
+    - go test {{.REPO_PATH}} -v --cover -update
+  silent: true
+
 cover:
   desc: Check cover of all unit tests.
   cmds:
