@@ -1,10 +1,6 @@
 package golden
 
 import (
-	"encoding/json"
-	"io/ioutil"
-	"path/filepath"
-
 	"strings"
 
 	"github.com/ddspog/bdd/internal/common"
@@ -14,8 +10,10 @@ import (
 var (
 	// testdata stores test cases about current feature being tested.
 	testdata = make(map[string][]*Gold)
-	// currentFeature tells the current feature bein tested.
+	// currentFeature tells the current feature being tested.
 	currentFeature = ""
+	// encoder do operations on the golden file, whatever its type.
+	encoder fileEncoder
 	// ErrInvalidKeyPrefix it's an error returned when gold.Get is called with key starting with wrong format.
 	ErrInvalidKeyPrefix = errors.New("the golden key must be prefixed by 'input.' or 'golden.'")
 )
@@ -23,17 +21,17 @@ var (
 // Gold contains information about a test case on a golden file,
 // separated in Input and Golden.
 type Gold struct {
-	Input  interface{} `json:"input"`
-	Golden interface{} `json:"golden"`
+	Input  interface{} `json:"input" yaml:"input"`
+	Golden interface{} `json:"golden" yaml:"golden"`
 }
 
 // Get returns value from golden file, using a json sequence of keys.
 func (g *Gold) Get(key string) (val interface{}) {
 	var err error
 	if strings.HasPrefix(key, "input.") {
-		val, err = get(g.Input, strings.TrimPrefix(key, "input."))
+		val, err = encoder.Val(g.Input, strings.TrimPrefix(key, "input."))
 	} else if strings.HasPrefix(key, "golden.") {
-		val, err = get(g.Golden, strings.TrimPrefix(key, "golden."))
+		val, err = encoder.Val(g.Golden, strings.TrimPrefix(key, "golden."))
 	} else {
 		err = ErrInvalidKeyPrefix
 	}
@@ -47,21 +45,15 @@ func (g *Gold) Get(key string) (val interface{}) {
 
 // Load unmarshall the json into input and gold pointers received.
 func (g *Gold) Load(input, gold interface{}) {
-	if jsonBytes, err := json.Marshal(g.Input); err == nil {
-		json.Unmarshal(jsonBytes, input)
-	}
-	if jsonBytes, err := json.Marshal(g.Golden); err == nil {
-		json.Unmarshal(jsonBytes, gold)
-	}
+	_ = encoder.Load(g.Input, input)
+	_ = encoder.Load(g.Golden, gold)
 }
 
 // Update get an struct or a map, and loads into golden part of test
 // case, to update file with new values.
 func (g *Gold) Update(values func() interface{}) {
 	if *update {
-		if jsonBytes, err := json.Marshal(values()); err == nil {
-			json.Unmarshal(jsonBytes, &g.Golden)
-		}
+		_ = encoder.Load(values(), &g.Golden)
 	}
 }
 
@@ -72,7 +64,7 @@ type Manager struct {
 	feature string
 }
 
-// Get returns the ith test case for the feature tested in manager.
+// Get returns the i-th test case for the feature tested in manager.
 func (m *Manager) Get(i int) (g common.Golden) {
 	g = m.goldies[i]
 	return
@@ -89,10 +81,8 @@ func (m *Manager) NumGoldies() (n int) {
 // write into golden file for the feature tested.
 func (m *Manager) Update() {
 	if *update {
-		if err := ensureDir(filepath.Dir(filename(m.feature))); err == nil {
-			if jsonBytes, err := json.MarshalIndent(testdata, "", "    "); err == nil {
-				ioutil.WriteFile(filename(m.feature), jsonBytes, FilePerms)
-			}
+		if err := encoder.Write(testdata); err != nil {
+			panic(err)
 		}
 	}
 }
@@ -100,20 +90,17 @@ func (m *Manager) Update() {
 // NewManager creates a manager, using the feature tested and given
 // context.
 func NewManager(feat, given string) (m *Manager) {
-	feature := fmtFeature(feat)
+	feature := strings.Replace(feat, " ", "", -1)
+	encoder = newEncoder(feature)
 
-	if currentFeature == feature {
-		if _, ok := testdata[given]; ok {
-			m = &Manager{goldies: testdata[given], feature: feature}
+	if currentFeature != feature {
+		if err := encoder.Read(&testdata); err != nil {
+			panic(err)
 		}
-	} else {
-		if bytes, err := getBytes(feature); err == nil {
-			if err = json.Unmarshal(bytes, &testdata); err == nil {
-				if _, ok := testdata[given]; ok {
-					m = &Manager{goldies: testdata[given], feature: feature}
-				}
-			}
-		}
+	}
+
+	if _, ok := testdata[given]; ok {
+		m = &Manager{goldies: testdata[given], feature: feature}
 	}
 
 	return
