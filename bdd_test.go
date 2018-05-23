@@ -213,7 +213,47 @@ func Test_Golden_JSON_sentences(t *testing.T) {
 		when("val := ts.Sum(%[input.a]v, %[input.b]v)", func(it It) {
 			val := ts.Sum(input.A, input.B)
 
-			golden.Update(func() interface{}{
+			golden.Update(func() interface{} {
+				gold.Sum = val
+				gold.Ts = ts
+				return gold
+			})
+
+			it("should result to %[golden.sum]v", func(assert Assert) {
+				assert.Equal(gold.Sum, val)
+			})
+			it("ts.Handicap should equal %[golden.ts.handicap]v", func(assert Assert) {
+				assert.Equal(gold.Ts.Handicap, ts.Handicap)
+			})
+			it("ts.LastResultAsString should equal %[golden.ts.last_result]v", func(assert Assert) {
+				assert.Equal(gold.Ts.LastResultAsString, ts.LastResultAsString)
+			})
+		})
+	})
+}
+
+// Feature Golden YAML sentences
+// - As a developer,
+// - I want to be able to test using golden YAML files with test cases,
+// - So I can update easily those test cases, and test many times.
+func Test_Golden_YAML_sentences(t *testing.T) {
+	given := Sentences().Golden()
+
+	input, gold := &struct {
+		A int `yaml:"a"`
+		B int `yaml:"b"`
+	}{}, &struct {
+		Sum int        `yaml:"sum"`
+		Ts  *TestSumOp `yaml:"ts"`
+	}{}
+
+	given(t, "a empty TestSumOp ts", func(when When, golden Golden) {
+		golden.Load(input, gold)
+		ts := &TestSumOp{}
+		when("val := ts.Sum(%[input.a]v, %[input.b]v)", func(it It) {
+			val := ts.Sum(input.A, input.B)
+
+			golden.Update(func() interface{} {
 				gold.Sum = val
 				gold.Ts = ts
 				return gold

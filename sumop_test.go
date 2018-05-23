@@ -22,8 +22,8 @@ func (t TestInt) Sum(a interface{}) (n TestInt) {
 
 // TestSumOp is a test structure to suite test a struct.
 type TestSumOp struct {
-	LastResultAsString string  `json:"last_result"`
-	Handicap           TestInt `json:"handicap"`
+	LastResultAsString string  `json:"last_result" yaml:"last_result"`
+	Handicap           TestInt `json:"handicap" yaml:"handicap"`
 }
 
 // Sum is a test method to suite test a struct.
