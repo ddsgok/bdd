@@ -43,7 +43,7 @@ type Configuration struct {
 	LastFeature string
 	LastGiven   string
 	LastWhen    string
-	LastSpec    string
+	LastIt      string
 }
 
 // ResetLasts sets all lats variables to empty. This makes config ready
@@ -51,7 +51,7 @@ type Configuration struct {
 func (c *Configuration) ResetLasts() {
 	c.LastGiven = ""
 	c.LastWhen = ""
-	c.LastSpec = ""
+	c.LastIt = ""
 }
 
 // init the configuration and assertions.
@@ -90,6 +90,7 @@ func SetAssertionsFn(fn func(s *TestSpecification) common.Assert) {
 //      AnsiOfFeature: "",	// remove color coding for Feature
 //    })
 //
+//noinspection GoUnusedExportedFunction
 func SetConfig(c Configuration) {
 	config = &c
 }

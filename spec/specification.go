@@ -73,17 +73,17 @@ func (spec *TestSpecification) PrintIt() {
 	if config.Output != OutputNone {
 		fmt.Printf("%s    » It %s %s\n", config.AnsiOfThen, spec.It, colors.Reset)
 	}
-	config.LastSpec = spec.It
+	config.LastIt = spec.It
 }
 
 // PrintItWithError prints line informing about verification being
 // tested when verification fail.
 func (spec *TestSpecification) PrintItWithError() {
-	if config.LastSpec == spec.It {
+	if config.LastIt == spec.It {
 		if config.Output != OutputNone {
 			fmt.Printf("%s    » It %s %s\n", config.AnsiOfThenWithError, spec.It, colors.Reset)
 		}
-		config.LastSpec = spec.It
+		config.LastIt = spec.It
 	}
 }
 
@@ -93,7 +93,7 @@ func (spec *TestSpecification) PrintItNotImplemented() {
 	if config.Output != OutputNone {
 		fmt.Printf("%s    » It %s «-- NOT IMPLEMENTED%s\n", config.AnsiOfThenNotImplemented, spec.It, colors.Reset)
 	}
-	config.LastSpec = spec.It
+	config.LastIt = spec.It
 }
 
 // PrintError prints text detailing how the verification failed on
