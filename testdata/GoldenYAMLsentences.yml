@@ -1,0 +1,18 @@
+---
+a empty TestSumOp ts:
+- input:
+    a: 0
+    b: 1
+  golden:
+    sum: 1
+    ts:
+      handicap: 0
+      last_result: "1"
+- input:
+    a: 2
+    b: 3
+  golden:
+    sum: 5
+    ts:
+      handicap: 0
+      last_result: "5"
