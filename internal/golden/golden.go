@@ -90,7 +90,11 @@ func (m *Manager) Update() {
 // NewManager creates a manager, using the feature tested and given
 // context.
 func NewManager(feat, given string) (m *Manager) {
-	feature := strings.Replace(feat, " ", "", -1)
+	feature := strings.Replace(
+		strings.Title(feat),
+		" ", "", -1,
+	)
+
 	encoder = newEncoder(feature)
 
 	if currentFeature != feature {

@@ -137,6 +137,38 @@ You could also use a file GoldenCase.yml with the structure:
 
 Please use adequate syntax to avoid problems when parsing these files. My package still doesn't have the best error description yet.
 
+## Golden Files
+
+All test names using this package, will name the feature, which removes '_' and change to spaces. The golden files for each test, must be named with the words in test name joined, and with the first letter uppercase.
+
+For example, in a test called:
+
+```go
+func Test_Creation_of_a_Product(t *testing.T) {
+    given := bdd.Sentences().Golden()
+    // ...
+}
+```
+
+The feature will be named as "Creation of a Product", and the name of golden file for this test should be "CreationOfAProduct.json" or the ".yml" version.
+
+For all the golden files, they need the following structure:
+
+```yaml
+"context of test, named on given":
+- { input: {}, golden: {} }
+- { input: {}, golden: {} }
+# ...
+"another context":
+- { input: {}, golden: {} }
+- { input: {}, golden: {} }
+# ...
+```
+
+All golden files, should start with a dictionary of context to a list of test cases. These context are named on the given sentence, after t argument.
+
+The list of test cases must, for each value, contain two keys: input and golden, with its values as user desire.
+
 Using `-update` flag will update the golden fields on each test case. Actually that would mean the golden file should have a nice layout for filling. In the future, I'll add a way to automatically ensure to have a file with nice structure.
 
 All tests using this package have colored output.
