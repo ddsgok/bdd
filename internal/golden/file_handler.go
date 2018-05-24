@@ -5,6 +5,14 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/pkg/errors"
+)
+
+var (
+	// ErrFileNotFoundInDataDir is thrown when the file to open isn't
+	// found on data dir.
+	ErrFileNotFoundInDataDir = errors.New("file not founded in data dir")
 )
 
 // fileHandler stores full file path, and can perform some operations.
@@ -82,6 +90,8 @@ func path(name string) (fh fileHandler, err error) {
 			}
 		}
 	}
+
+	err = ErrFileNotFoundInDataDir
 
 	return
 }
