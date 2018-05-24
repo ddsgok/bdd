@@ -1,4 +1,4 @@
-# mongo [![GoDoc](https://godoc.org/github.com/ddspog/bdd?status.svg)](https://godoc.org/github.com/ddspog/bdd) [![Go Report Card](https://goreportcard.com/badge/github.com/ddspog/bdd)](https://goreportcard.com/report/github.com/ddspog/bdd) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/) [![Travis CI](https://travis-ci.org/ddspog/bdd.svg?branch=master)](https://travis-ci.org/ddspog/bdd)
+# bdd [![GoDoc](https://godoc.org/github.com/ddspog/bdd?status.svg)](https://godoc.org/github.com/ddspog/bdd) [![Go Report Card](https://goreportcard.com/badge/github.com/ddspog/bdd)](https://goreportcard.com/report/github.com/ddspog/bdd) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/) [![Travis CI](https://travis-ci.org/ddspog/bdd.svg?branch=master)](https://travis-ci.org/ddspog/bdd)
 
 by [eduncan911](https://github.com/eduncan911) and forked by [ddspog](http://github.com/ddspog)
 
