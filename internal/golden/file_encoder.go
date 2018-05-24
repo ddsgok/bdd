@@ -145,8 +145,9 @@ type fileEncoder interface {
 // newEncoder creates a fileEncoder initializing with the path to the
 // file the encoder will work. It selects the appropriate encoder type,
 // depending of the file extension.
-func newEncoder(name string) (fe fileEncoder) {
-	if p, err := path(name); err == nil {
+func newEncoder(name string) (fe fileEncoder, err error) {
+	var p fileHandler
+	if p, err = path(name); err == nil {
 		switch p.ExtType() {
 		case jsonType:
 			fe = &jsonEncoder{p, &helperEncoder{}}

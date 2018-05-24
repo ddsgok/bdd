@@ -95,10 +95,13 @@ func NewManager(feat, given string) (m *Manager) {
 		" ", "", -1,
 	)
 
-	encoder = newEncoder(feature)
+	var err error
+	if encoder, err = newEncoder(feature); err == nil {
+		panic(err)
+	}
 
 	if currentFeature != feature {
-		if err := encoder.Read(&testdata); err != nil {
+		if err = encoder.Read(&testdata); err != nil {
 			panic(err)
 		}
 	}
