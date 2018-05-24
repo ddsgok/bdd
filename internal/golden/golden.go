@@ -96,7 +96,7 @@ func NewManager(feat, given string) (m *Manager) {
 	)
 
 	var err error
-	if encoder, err = newEncoder(feature); err == nil {
+	if encoder, err = newEncoder(feature); err != nil {
 		panic(err)
 	}
 
