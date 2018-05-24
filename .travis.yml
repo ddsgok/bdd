@@ -9,6 +9,4 @@ install:
 beforeScript:
   - sleep 15
 script:
-  - ls .
-  - ls testdata\
   - task test
