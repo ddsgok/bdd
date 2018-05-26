@@ -79,7 +79,7 @@ func (spec *TestSpecification) PrintIt() {
 // PrintItWithError prints line informing about verification being
 // tested when verification fail.
 func (spec *TestSpecification) PrintItWithError() {
-	if config.LastIt == spec.It {
+	if config.LastIt != spec.It {
 		if config.Output != OutputNone {
 			fmt.Printf("%s    » It %s %s\n", config.AnsiOfThenWithError, spec.It, colors.Reset)
 		}
