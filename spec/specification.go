@@ -79,12 +79,10 @@ func (spec *TestSpecification) PrintIt() {
 // PrintItWithError prints line informing about verification being
 // tested when verification fail.
 func (spec *TestSpecification) PrintItWithError() {
-	if config.LastIt != spec.It {
-		if config.Output != OutputNone {
-			fmt.Printf("%s    » It %s %s\n", config.AnsiOfThenWithError, spec.It, colors.Reset)
-		}
-		config.LastIt = spec.It
+	if config.Output != OutputNone {
+		fmt.Printf("%s    » It %s %s\n", config.AnsiOfThenWithError, spec.It, colors.Reset)
 	}
+	config.LastIt = spec.It
 }
 
 // PrintItNotImplemented prints line informing about verification not
@@ -126,6 +124,8 @@ func (spec *TestSpecification) Run() {
 	} else if !spec.AssertionFailed {
 		spec.PrintIt()
 	}
+
+	spec.AssertionFailed = false
 }
 
 func New(t *testing.T, feat, given string) (sp *TestSpecification) {
