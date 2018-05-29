@@ -20,7 +20,6 @@ type failingLineData struct {
 	next     string
 	filename string
 	number   int
-	lines    []string
 }
 
 // TestSpecification holds the state of the test context for a specific specification.
@@ -147,13 +146,13 @@ func failingLine() (fl failingLineData, err error) {
 	// called after the Assertion has been executed to print details to the
 	// string.
 
-	_, filename, ln, _ := runtime.Caller(5)
+	_, filename, ln, _ := runtime.Caller(6)
 
 	// this is really hacky, need to find a way of not using magic numbers for runtime.Caller
 	// If we are not in a test file, we must still be inside this package,
 	// so we need to go up one more stack frame to get to the test file
 	if !strings.HasSuffix(filename, "_test.go") {
-		_, filename, ln, _ = runtime.Caller(6)
+		_, filename, ln, _ = runtime.Caller(7)
 	}
 
 	bf, err := ioutil.ReadFile(filename)

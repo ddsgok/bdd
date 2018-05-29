@@ -104,6 +104,8 @@ func NewManager(feat, given string) (m *Manager) {
 		if err = encoder.Read(&testdata); err != nil {
 			panic(err)
 		}
+
+		currentFeature = feature
 	}
 
 	if _, ok := testdata[given]; ok {
