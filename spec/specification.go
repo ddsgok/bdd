@@ -44,6 +44,8 @@ func (spec *TestSpecification) PrintFeature() {
 		}
 		config.LastFeature = spec.Feature
 	}
+
+	config.ResetLasts()
 }
 
 // PrintContext prints line informing about context being tested.
@@ -54,6 +56,8 @@ func (spec *TestSpecification) PrintContext() {
 		}
 		config.LastGiven = spec.Given
 	}
+
+	config.ResetWhen()
 }
 
 // PrintWhen prints line informing about situation being tested.
@@ -64,6 +68,8 @@ func (spec *TestSpecification) PrintWhen() {
 		}
 		config.LastWhen = spec.When
 	}
+
+	config.ResetIt()
 }
 
 // PrintIt prints line informing about verification being tested when
