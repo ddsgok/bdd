@@ -45,8 +45,13 @@ func (g *Gold) Get(key string) (val interface{}) {
 
 // Load unmarshall the json into input and gold pointers received.
 func (g *Gold) Load(input, gold interface{}) {
-	_ = encoder.Load(g.Input, input)
-	_ = encoder.Load(g.Golden, gold)
+	if input != nil {
+		_ = encoder.Load(g.Input, input)
+	}
+
+	if gold != nil {
+		_ = encoder.Load(g.Golden, gold)
+	}
 }
 
 // Update get an struct or a map, and loads into golden part of test
