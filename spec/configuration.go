@@ -46,11 +46,23 @@ type Configuration struct {
 	LastIt      string
 }
 
-// ResetLasts sets all lats variables to empty. This makes config ready
+// ResetLasts sets all last variables to empty. This makes config ready
 // to print information about another context.
 func (c *Configuration) ResetLasts() {
+	c.ResetWhen()
 	c.LastGiven = ""
+}
+
+// ResetWhen sets when and it last variables to empty. This makes
+// config ready to print information about another condition.
+func (c *Configuration) ResetWhen() {
+	c.ResetIt()
 	c.LastWhen = ""
+}
+
+// ResetIt sets it last variables to empty. This makes config ready to
+// print information about another verification.
+func (c *Configuration) ResetIt() {
 	c.LastIt = ""
 }
 
