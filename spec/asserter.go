@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/ddspog/bdd/internal/assert"
-	"github.com/ddspog/bdd/internal/common"
+	"github.com/ddsgok/bdd/internal/assert"
+	"github.com/ddsgok/bdd/internal/common"
 )
 
 // specificationTesting is the glue used to bind assertions to the

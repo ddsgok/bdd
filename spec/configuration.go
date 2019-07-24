@@ -3,8 +3,8 @@ package spec
 import (
 	"strings"
 
-	"github.com/ddspog/bdd/colors"
-	"github.com/ddspog/bdd/internal/common"
+	"github.com/ddsgok/bdd/colors"
+	"github.com/ddsgok/bdd/internal/common"
 )
 
 const (

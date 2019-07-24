@@ -1,4 +1,4 @@
-module github.com/ddspog/bdd
+module github.com/ddsgok/bdd
 
 require (
 	github.com/pkg/errors v0.8.0
