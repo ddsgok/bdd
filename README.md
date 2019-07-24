@@ -116,10 +116,10 @@ For those tests it's important to have a file GoldenCase.json inside package tes
 ```json
 {
     "two values a = %[input.a]v and b = %[input.b]v": [{
-        "input": { "a": 0, "b", 1 },
+        "input": { "a": 0, "b": 1 },
         "golden": { "sum": 1 }
     }, {
-        "input": { "a": 2, "b", 3 },
+        "input": { "a": 2, "b": 3 },
         "golden": { "sum": 5 }
     }]
 }
