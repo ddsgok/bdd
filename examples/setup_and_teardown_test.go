@@ -3,7 +3,7 @@ package examples
 import (
 	"testing"
 
-	. "github.com/ddspog/bdd"
+	. "github.com/ddsgok/bdd"
 )
 
 /*

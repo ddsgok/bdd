@@ -1,7 +1,7 @@
 package bdd
 
 import (
-	"github.com/ddspog/bdd/internal/common"
+	"github.com/ddsgok/bdd/internal/common"
 )
 
 // Arguments defines a set of arguments, to run on Given, When or It sentences.

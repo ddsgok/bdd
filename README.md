@@ -1,4 +1,4 @@
-# bdd [![GoDoc](https://godoc.org/github.com/ddspog/bdd?status.svg)](https://godoc.org/github.com/ddspog/bdd) [![Go Report Card](https://goreportcard.com/badge/github.com/ddspog/bdd)](https://goreportcard.com/report/github.com/ddspog/bdd) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/) [![Travis CI](https://travis-ci.org/ddspog/bdd.svg?branch=master)](https://travis-ci.org/ddspog/bdd)
+# bdd [![GoDoc](https://godoc.org/github.com/ddsgok/bdd?status.svg)](https://godoc.org/github.com/ddsgok/bdd) [![Go Report Card](https://goreportcard.com/badge/github.com/ddsgok/bdd)](https://goreportcard.com/report/github.com/ddsgok/bdd) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/) [![Travis CI](https://travis-ci.org/ddsgok/bdd.svg?branch=master)](https://travis-ci.org/ddsgok/bdd)
 
 by [eduncan911](https://github.com/eduncan911) and forked by [ddspog](http://github.com/ddspog)
 
@@ -6,14 +6,14 @@ Package **bdd** enables creation of behaviour driven tests with sentences.
 
 ## License
 
-You are free to copy, modify and distribute **bdd** package with attribution under the terms of the MIT license. See the [LICENSE](https://github.com/ddspog/bdd/blob/master/LICENSE) file for details.
+You are free to copy, modify and distribute **bdd** package with attribution under the terms of the MIT license. See the [LICENSE](https://github.com/ddsgok/bdd/blob/master/LICENSE) file for details.
 
 ## Installation
 
 Install **bdd** package with:
 
 ```shell
-go get github.com/ddspog/bdd
+go get github.com/ddsgok/bdd
 ```
 
 ## How to use
@@ -37,7 +37,7 @@ You represent these thoughts in code using bdd.Sentences().Given():
 package product_test
 
 import (
-    "github.com/ddspog/bdd"
+    "github.com/ddsgok/bdd"
     "testing"
 )
 

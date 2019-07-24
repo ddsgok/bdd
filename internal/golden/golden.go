@@ -3,7 +3,7 @@ package golden
 import (
 	"strings"
 
-	"github.com/ddspog/bdd/internal/common"
+	"github.com/ddsgok/bdd/internal/common"
 	"github.com/pkg/errors"
 )
 

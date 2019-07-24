@@ -4,8 +4,8 @@ import (
 	"math"
 	"testing"
 
-	"github.com/ddspog/bdd"
-	"github.com/ddspog/bdd/spec"
+	"github.com/ddsgok/bdd"
+	"github.com/ddsgok/bdd/spec"
 )
 
 func Test_MSpec_Instances(t *testing.T) {

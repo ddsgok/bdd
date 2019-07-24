@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ddspog/bdd/internal/common"
+	"github.com/ddsgok/bdd/internal/common"
 )
 
 var (

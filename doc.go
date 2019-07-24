@@ -19,7 +19,7 @@ You represent these thoughts in code using bdd.Sentences().Given():
 	package product_test
 
 	import (
-		"github.com/ddspog/bdd"
+		"github.com/ddsgok/bdd"
 		"testing"
 	)
 

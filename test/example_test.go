@@ -1,6 +1,6 @@
 package test
 
-import "github.com/ddspog/bdd"
+import "github.com/ddsgok/bdd"
 
 //"testing"
 

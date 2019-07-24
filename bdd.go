@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/ddspog/bdd/internal/golden"
-	"github.com/ddspog/bdd/spec"
+	"github.com/ddsgok/bdd/internal/golden"
+	"github.com/ddsgok/bdd/spec"
 )
 
 // Given defines one Feature's specific context to be tested.
